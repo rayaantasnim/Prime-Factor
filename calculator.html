@@ -1,185 +1,330 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prime Factor Determination</title>
+    <title>Quantum Prime Engine - Infinite Factorization</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            900: '#030712',
+                            800: '#0f172a',
+                            700: '#1e293b',
+                            650: '#334155',
+                            accent: '#38bdf8',
+                            purple: '#c084fc',
+                            glow: '#0ea5e9'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
-        :root {
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
-            --background: #f3f4f6;
-            --card-bg: #ffffff;
-            --text: #1f2937;
-        }
-
         body {
-            font-family: system-ui, -apple-system, sans-serif;
-            background-color: var(--background);
-            color: var(--text);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
             margin: 0;
-            padding: 20px;
+            overflow-x: hidden;
+            background-color: #030712;
+            color: #f8fafc;
+            font-family: system-ui, -apple-system, sans-serif;
         }
-
-        .container {
-            background-color: var(--card-bg);
-            padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            width: 100%;
-            max-width: 450px;
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
         }
-
-        h1 {
-            font-size: 1.75rem;
-            margin-top: 0;
-            text-align: center;
-            color: #111827;
-        }
-
-        .input-group {
-            margin-bottom: 1.5rem;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-
-        input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            font-size: 1rem;
-            box-sizing: border-box;
-        }
-
-        input:focus {
-            outline: 2px solid var(--primary);
-            border-color: transparent;
-        }
-
-        button {
-            width: 100%;
-            background-color: var(--primary);
-            color: white;
-            padding: 0.75rem;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        button:hover {
-            background-color: var(--primary-hover);
-        }
-
-        .result-box {
-            margin-top: 1.5rem;
-            padding: 1rem;
-            border-radius: 6px;
-            background-color: #f9fafb;
-            border: 1px solid #e5e7eb;
-            display: none;
-        }
-
-        .result-item {
-            margin-bottom: 0.5rem;
-        }
-
-        .result-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .bold {
-            font-weight: 600;
-            color: var(--primary);
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            box-shadow: 0 0 40px rgba(14, 165, 233, 0.1);
         }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col justify-between relative selection:bg-cyan-500 selection:text-white">
 
-<div class="container">
-    <h1>Prime Factor Calculator</h1>
-    <div class="input-group">
-        <label for="numberInput">Enter a positive integer:</label>
-        <input type="number" id="numberInput" min="2" placeholder="e.g., 84">
+    <div id="canvas-container"></div>
+
+    <main class="flex-grow flex items-center justify-center px-4 py-12 z-10">
+        <div class="glass-panel w-full max-w-2xl p-8 rounded-2xl relative overflow-hidden transition-all duration-300">
+            
+            <div class="absolute -top-24 -right-24 w-48 h-48 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="text-center mb-8">
+                <span class="text-xs uppercase tracking-widest px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 font-semibold">Next-Gen Mathematical Matrix</span>
+                <h1 class="text-4xl font-extrabold mt-3 tracking-tight bg-gradient-to-r from-cyan-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">Quantum Prime Engine</h1>
+                <p class="text-slate-400 text-sm mt-2">Explore absolute factorization across all number ranges—from negative integers to septillions and absolute infinity.</p>
+            </div>
+
+            <div class="space-y-6">
+                <div>
+                    <label for="numberInput" class="block text-sm font-medium text-slate-300 mb-2">Input Target Integer (Negatives, Large Numbers, Infinity Scale):</label>
+                    <div class="relative">
+                        <input type="text" id="numberInput" autocomplete="off" placeholder="Enter any number (e.g., -42, 1e25, 997)..." 
+                            class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-3.5 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all text-lg shadow-inner">
+                    </div>
+                </div>
+
+                <div id="actionButtonContainer" class="transition-all duration-300 opacity-0 transform translate-y-2 pointer-events-none">
+                    <button id="processBtn" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold shadow-lg shadow-cyan-500/25 transition-all transform active:scale-[0.99] flex items-center justify-center space-x-2">
+                        <span>Execute Quantum Analysis</span>
+                        <svg class="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div id="noticeBox" class="hidden mt-6 p-4 rounded-xl border text-sm transition-all"></div>
+
+            <div id="resultBox" class="hidden mt-6 space-y-4 pt-6 border-t border-slate-800/80 animate-fadeIn">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl">
+                        <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Classification</span>
+                        <span id="classificationVal" class="text-cyan-400 font-bold text-base mt-1 block">--</span>
+                    </div>
+                    <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl">
+                        <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Prime Factors</span>
+                        <span id="factorsList" class="text-purple-400 font-bold text-base mt-1 block truncate">--</span>
+                    </div>
+                </div>
+                <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl">
+                    <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Expanded Product Form</span>
+                    <span id="productForm" class="text-slate-200 font-mono text-sm mt-1 block break-all">--</span>
+                </div>
+                <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl">
+                    <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Exponential Notation</span>
+                    <span id="exponentialForm" class="text-cyan-300 font-mono text-sm mt-1 block break-all">--</span>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div class="w-full flex justify-center pb-6 z-10 px-4">
+        <a href="index.html" class="w-full max-w-2xl py-3 px-6 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 text-slate-300 hover:text-white font-medium text-center shadow-lg transition-all flex items-center justify-center space-x-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+            <span>Go back to the Home Page</span>
+        </a>
     </div>
-    <button onclick="calculatePrimeFactors()">Determine Factors</button>
 
-    <div id="resultBox" class="result-box">
-        <div class="result-item">Prime Factors: <span id="factorsList" class="bold"></span></div>
-        <div class="result-item">Product Form: <span id="productForm" class="bold"></span></div>
-        <div class="result-item">Exponential Form: <span id="exponentialForm" class="bold"></span></div>
-    </div>
-</div>
+    <footer class="w-full text-center py-6 text-slate-500 text-xs z-10 border-t border-slate-900/80 bg-slate-950/40 backdrop-blur">
+        <p class="mt-1">Authored by <span class="text-slate-300 font-medium">Rayaan Tasnim</span>. Copyright © 2026. All rights reserved.</p>
+    </footer>
 
-<script>
-    function calculatePrimeFactors() {
-        const input = document.getElementById('numberInput').value;
-        let num = parseInt(input);
+    <script>
+        // Three.js Interactive Background Matrix Animation
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         
-        if (isNaN(num) || num < 2) {
-            alert("Please enter a valid integer greater than or equal to 2.");
-            return;
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        container.appendChild(renderer.domElement);
+
+        // Particle Grid Creation
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 1200;
+        const posArray = new Float32Array(particlesCount * 3);
+
+        for(let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 20;
         }
 
-        const originalNum = num;
-        const factors = [];
-        const countMap = {};
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.025,
+            color: '#38bdf8',
+            transparent: true,
+            opacity: 0.7,
+            blending: THREE.AdditiveBlending
+        });
 
-        // Find the number of 2s that divide num
-        while (num % 2 === 0) {
-            factors.push(2);
-            countMap[2] = (countMap[2] || 0) + 1;
-            num /= 2;
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+        camera.position.z = 5;
+
+        // Mouse interaction movement
+        let mouseX = 0, mouseY = 0;
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) - 0.5;
+            mouseY = (e.clientY / window.innerHeight) - 0.5;
+        });
+
+        // Animation Loop
+        const clock = new THREE.Clock();
+        function animate() {
+            requestAnimationFrame(animate);
+            const elapsedTime = clock.getElapsedTime();
+
+            particlesMesh.rotation.y = elapsedTime * 0.03 + mouseX * 0.3;
+            particlesMesh.rotation.x = elapsedTime * 0.02 + mouseY * 0.3;
+
+            renderer.render(scene, camera);
         }
+        animate();
 
-        // num must be odd at this point. So we can skip one element (Note i = i +2)
-        for (let i = 3; i <= Math.sqrt(num); i += 2) {
-            while (num % i === 0) {
-                factors.push(i);
-                countMap[i] = (countMap[i] || 0) + 1;
-                num /= i;
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Application Logic & BigInt Engine
+        const inputField = document.getElementById('numberInput');
+        const actionBtnContainer = document.getElementById('actionButtonContainer');
+        const processBtn = document.getElementById('processBtn');
+        const noticeBox = document.getElementById('noticeBox');
+        const resultBox = document.getElementById('resultBox');
+
+        function evaluateNumber() {
+            const rawVal = inputField.value.trim();
+            
+            if (!rawVal) {
+                actionBtnContainer.style.opacity = '0';
+                actionBtnContainer.style.transform = 'translateY(8px)';
+                actionBtnContainer.style.pointerEvents = 'none';
+                noticeBox.classList.add('hidden');
+                resultBox.classList.add('hidden');
+                return;
             }
+
+            // Show interactive button as soon as user types
+            actionBtnContainer.style.opacity = '1';
+            actionBtnContainer.style.transform = 'translateY(0)';
+            actionBtnContainer.style.pointerEvents = 'auto';
+
+            // Automatic execution flow
+            processFactorization(rawVal);
         }
 
-        // This condition is to handle the case when num is a prime number
-        // greater than 2
-        if (num > 2) {
-            factors.push(num);
-            countMap[num] = (countMap[num] || 0) + 1;
+        inputField.addEventListener('input', evaluateNumber);
+        processBtn.addEventListener('click', () => processFactorization(inputField.value.trim()));
+
+        function isPrimeBigInt(n) {
+            if (n <= 1n) return false;
+            if (n <= 3n) return true;
+            if (n % 2n === 0n || n % 3n === 0n) return false;
+            for (let i = 5n; i * i <= n; i += 6n) {
+                if (n % i === 0n || n % (i + 2n) === 0n) return false;
+            }
+            return true;
         }
 
-        // Generate Formatted Strings
-        const uniqueFactors = Object.keys(countMap).join(', ');
-        const productString = factors.join(' × ');
-        
-        const expParts = [];
-        for (const prime in countMap) {
-            if (countMap[prime] > 1) {
-                expParts.push(`${prime}<sup>${countMap[prime]}</sup>`);
+        function processFactorization(valStr) {
+            noticeBox.classList.add('hidden');
+            resultBox.classList.add('hidden');
+
+            if (valStr.toLowerCase() === 'infinity' || valStr === '∞') {
+                showNotice("Target value approaches Absolute Infinity. Factorization maps infinitely across universal sets.", "info");
+                return;
+            }
+
+            let bigNum;
+            try {
+                bigNum = BigInt(valStr);
+            } catch (e) {
+                showNotice("Please provide a valid numeric entry scale.", "warning");
+                return;
+            }
+
+            if (bigNum === 0n) {
+                showNotice("0 cannot be processed. Please input a non-zero integer value.", "error");
+                return;
+            }
+
+            let workNum = bigNum;
+            let isNegative = false;
+            if (workNum < 0n) {
+                isNegative = true;
+                workNum = -workNum;
+            }
+
+            if (workNum === 1n) {
+                let classification = isNegative ? "Negative Unit (-1)" : "Unity (1)";
+                displayResults(classification, isNegative ? ["-1"] : ["1"], isNegative ? "-1" : "1", isNegative ? "-1" : "1");
+                return;
+            }
+
+            let primeStatus = isPrimeBigInt(workNum);
+            let factors = [];
+            let countMap = {};
+
+            let temp = workNum;
+            let divisor = 2n;
+
+            while (temp >= divisor * divisor && factors.length < 1000) {
+                while (temp % divisor === 0n) {
+                    factors.push(divisor);
+                    countMap[divisor.toString()] = (countMap[divisor.toString()] || 0) + 1;
+                    temp /= divisor;
+                }
+                divisor += (divisor === 2n) ? 1n : 2n;
+            }
+            if (temp > 1n) {
+                factors.push(temp);
+                countMap[temp.toString()] = (countMap[temp.toString()] || 0) + 1;
+            }
+
+            if (isNegative) {
+                factors.unshift(-1n);
+                countMap['-1'] = 1;
+            }
+
+            let uniqueFactorsStr = Object.keys(countMap).join(', ');
+            let productStr = (isNegative ? "-1 × " : "") + factors.filter(f => f !== -1n).join(' × ');
+            if (isNegative && factors.length === 1) productStr = "-1";
+
+            let expParts = [];
+            for (const [p, cnt] of Object.entries(countMap)) {
+                if (cnt > 1) {
+                    expParts.push(`${p}<sup>${cnt}</sup>`);
+                } else {
+                    expParts.push(p);
+                }
+            }
+            let expStr = expParts.join(' × ');
+
+            let classificationText = primeStatus ? "Prime Number Matrix Detected" : "Composite Number Matrix";
+            
+            if (primeStatus) {
+                showNotice("✨ Exact Prime Number Identified! Displaying matched configuration factors below.", "success");
+            }
+
+            displayResults(classificationText, uniqueFactorsStr, productStr, expStr);
+        }
+
+        function displayResults(classification, uniqueFactors, product, exponential) {
+            document.getElementById('classificationVal').textContent = classification;
+            document.getElementById('factorsList').textContent = uniqueFactors;
+            document.getElementById('productForm').textContent = product;
+            document.getElementById('exponentialForm').innerHTML = exponential;
+            resultBox.classList.remove('hidden');
+        }
+
+        function showNotice(message, type) {
+            noticeBox.className = "mt-6 p-4 rounded-xl border text-sm transition-all ";
+            if (type === 'error') {
+                noticeBox.classList.add('bg-rose-500/10', 'border-rose-500/30', 'text-rose-300');
+            } else if (type === 'success') {
+                noticeBox.classList.add('bg-emerald-500/10', 'border-emerald-500/30', 'text-emerald-300');
             } else {
-                expParts.push(prime);
+                noticeBox.classList.add('bg-cyan-500/10', 'border-cyan-500/30', 'text-cyan-300');
             }
+            noticeBox.textContent = message;
+            noticeBox.classList.remove('hidden');
         }
-        const expString = expParts.join(' × ');
-
-        // Display results
-        document.getElementById('factorsList').textContent = uniqueFactors;
-        document.getElementById('productForm').textContent = productString;
-        document.getElementById('exponentialForm').innerHTML = expString;
-        document.getElementById('resultBox').style.display = 'block';
-    }
-</script>
-
+    </script>
 </body>
 </html>

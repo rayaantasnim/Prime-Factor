@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantum Prime Engine - Infinite Factorization</title>
+    <title>Quantum Prime Engine - Secure Mathematical Matrix</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -50,64 +50,132 @@
             border: 1px solid rgba(56, 189, 248, 0.2);
             box-shadow: 0 0 40px rgba(14, 165, 233, 0.1);
         }
+        .math-bg-section {
+            position: relative;
+            background-image: url('https://images.pexels.com/photos/546819/pexels-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+            background-size: cover;
+            background-position: center;
+        }
+        .math-bg-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(3, 7, 18, 0.90);
+            z-index: 1;
+        }
+        .math-bg-section > * {
+            position: relative;
+            z-index: 2;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between relative selection:bg-cyan-500 selection:text-white">
 
     <div id="canvas-container"></div>
 
-    <main class="flex-grow flex items-center justify-center px-4 py-12 z-10">
-        <div class="glass-panel w-full max-w-2xl p-8 rounded-2xl relative overflow-hidden transition-all duration-300">
+    <!-- Hero Banner Section -->
+    <header class="w-full px-4 pt-12 pb-8 z-10 max-w-6xl mx-auto">
+        <div class="glass-panel p-8 md:p-12 rounded-3xl relative overflow-hidden transition-all duration-500 hover:border-cyan-500/40 hover:shadow-cyan-500/20">
+            <div class="absolute -top-32 -right-32 w-64 h-64 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-32 -left-32 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <span class="text-xs uppercase tracking-widest px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 font-semibold transition-all duration-300 hover:bg-cyan-500/20 hover:scale-105 cursor-default inline-block">High-Capacity Processing Matrix</span>
+                <h1 class="text-4xl md:text-5xl font-extrabold mt-4 tracking-tight bg-gradient-to-r from-cyan-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent transition-all duration-300 hover:brightness-125 cursor-default">Unlimited Time Engine with Range up to 10⁴¹</h1>
+                <p class="text-slate-300 text-base md:text-lg mt-4 leading-relaxed transition-colors duration-300 hover:text-white cursor-default">
+                    Designed to run for unlimited time with a numerical operational range up to 10 to the power 41. Values exceeding 10 to the power 42 trigger an automatic boundary limit exceed error.
+                </p>
+            </div>
+
+            <!-- Horizontal Cards Breakable in Smaller Screens with Hover Effects -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="bg-slate-900/80 border border-slate-800 p-5 rounded-2xl flex flex-col justify-between transition-all duration-300 hover:scale-[1.03] hover:border-cyan-500/50 hover:shadow-lg hover:shadow-cyan-500/10 hover:bg-slate-800/90 cursor-default">
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-3 font-bold transition-all duration-300 hover:bg-cyan-500/30 hover:scale-110">01</div>
+                        <h3 class="text-white font-semibold text-base transition-colors duration-300 hover:text-cyan-300">Negatives Scale</h3>
+                        <p class="text-slate-400 text-sm mt-1 transition-colors duration-300 hover:text-slate-200">Full structural handling of negative integer factorizations seamlessly.</p>
+                    </div>
+                </div>
+                <div class="bg-slate-900/80 border border-slate-800 p-5 rounded-2xl flex flex-col justify-between transition-all duration-300 hover:scale-[1.03] hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/10 hover:bg-slate-800/90 cursor-default">
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-3 font-bold transition-all duration-300 hover:bg-purple-500/30 hover:scale-110">02</div>
+                        <h3 class="text-white font-semibold text-base transition-colors duration-300 hover:text-purple-300">Large Numbers</h3>
+                        <p class="text-slate-400 text-sm mt-1 transition-colors duration-300 hover:text-slate-200">Deep computational depth optimized for massive composite structures.</p>
+                    </div>
+                </div>
+                <div class="bg-slate-900/80 border border-slate-800 p-5 rounded-2xl flex flex-col justify-between sm:col-span-2 lg:col-span-1 transition-all duration-300 hover:scale-[1.03] hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/10 hover:bg-slate-800/90 cursor-default">
+                    <div>
+                        <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-3 font-bold transition-all duration-300 hover:bg-blue-500/30 hover:scale-110">03</div>
+                        <h3 class="text-white font-semibold text-base transition-colors duration-300 hover:text-blue-300">Precision Scale</h3>
+                        <p class="text-slate-400 text-sm mt-1 transition-colors duration-300 hover:text-slate-200">Strict range controls enforcing safety boundaries up to 10⁴¹ digits.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Calculator Section with Dedicated Mathematical Background -->
+    <main class="flex-grow flex items-center justify-center px-4 py-8 z-10 math-bg-section w-full">
+        <div class="glass-panel w-full max-w-2xl p-8 rounded-2xl relative overflow-hidden transition-all duration-500 hover:border-cyan-500/40 hover:shadow-2xl hover:shadow-cyan-500/10">
             
             <div class="absolute -top-24 -right-24 w-48 h-48 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
 
             <div class="text-center mb-8">
-                <span class="text-xs uppercase tracking-widest px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 font-semibold">Next-Gen Mathematical Matrix</span>
-                <h1 class="text-4xl font-extrabold mt-3 tracking-tight bg-gradient-to-r from-cyan-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">Quantum Prime Engine</h1>
-                <p class="text-slate-400 text-sm mt-2">Explore absolute factorization across all number ranges—from negative integers to septillions and absolute infinity.</p>
+                <span class="text-xs uppercase tracking-widest px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 font-semibold transition-all duration-300 hover:bg-cyan-500/25 hover:scale-105 cursor-default inline-block">Next-Gen Mathematical Matrix</span>
+                <h2 class="text-3xl font-extrabold mt-3 tracking-tight bg-gradient-to-r from-cyan-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent transition-all duration-300 hover:brightness-125 cursor-default">Quantum Prime Engine</h2>
+                <p class="text-slate-400 text-sm mt-2 transition-colors duration-300 hover:text-slate-200 cursor-default">Explore absolute factorization across supported number ranges.</p>
             </div>
 
             <div class="space-y-6">
                 <div>
-                    <label for="numberInput" class="block text-sm font-medium text-slate-300 mb-2">Input Target Integer (Negatives, Large Numbers, Infinity Scale):</label>
+                    <label for="numberInput" class="block text-sm font-medium text-slate-300 mb-2 transition-colors duration-300 hover:text-cyan-400 cursor-pointer">Input Target Integer:</label>
                     <div class="relative">
                         <input type="text" id="numberInput" autocomplete="off" placeholder="Enter any number (e.g., -42, 1e25, 997)..." 
-                            class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-3.5 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all text-lg shadow-inner">
+                            class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-3.5 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 hover:border-cyan-500/50 hover:bg-slate-900 transition-all text-lg shadow-inner">
                     </div>
                 </div>
 
                 <div id="actionButtonContainer" class="transition-all duration-300 opacity-0 transform translate-y-2 pointer-events-none">
-                    <button id="processBtn" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold shadow-lg shadow-cyan-500/25 transition-all transform active:scale-[0.99] flex items-center justify-center space-x-2">
+                    <button id="processBtn" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold shadow-lg shadow-cyan-500/25 transition-all transform hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center space-x-2">
                         <span>Execute Quantum Analysis</span>
                         <svg class="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                     </button>
                 </div>
             </div>
 
-            <div id="noticeBox" class="hidden mt-6 p-4 rounded-xl border text-sm transition-all"></div>
+            <div id="noticeBox" class="hidden mt-6 p-4 rounded-xl border text-sm transition-all duration-300 hover:brightness-110"></div>
 
             <div id="resultBox" class="hidden mt-6 space-y-4 pt-6 border-t border-slate-800/80 animate-fadeIn">
-                <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl">
-                    <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Inputted Number Recognized</span>
-                    <span id="inputtedValDisplay" class="text-cyan-200 font-mono text-base mt-1 block break-all">--</span>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl transition-all duration-300 hover:bg-slate-800/80 hover:border-cyan-500/40 hover:scale-[1.01] cursor-default">
+                        <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider transition-colors duration-300 hover:text-cyan-300">Inputted Number Recognized</span>
+                        <span id="inputtedValDisplay" class="text-cyan-200 font-mono text-base mt-1 block break-all">--</span>
+                    </div>
+                    <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl transition-all duration-300 hover:bg-slate-800/80 hover:border-cyan-500/40 hover:scale-[1.01] cursor-default">
+                        <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider transition-colors duration-300 hover:text-cyan-300">Input Scale Magnitude</span>
+                        <span id="inputMagnitudeDisplay" class="text-cyan-300 font-mono text-base mt-1 block break-all">--</span>
+                    </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl">
-                        <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Classification</span>
+                    <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl transition-all duration-300 hover:bg-slate-800/80 hover:border-cyan-500/40 hover:scale-[1.01] cursor-default">
+                        <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider transition-colors duration-300 hover:text-cyan-300">Classification</span>
                         <span id="classificationVal" class="text-cyan-400 font-bold text-base mt-1 block">--</span>
                     </div>
-                    <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl">
-                        <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Prime Factors</span>
+                    <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl transition-all duration-300 hover:bg-slate-800/80 hover:border-purple-500/40 hover:scale-[1.01] cursor-default">
+                        <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider transition-colors duration-300 hover:text-purple-300">Prime Factors</span>
                         <span id="factorsList" class="text-purple-400 font-bold text-base mt-1 block truncate">--</span>
                     </div>
                 </div>
-                <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl">
-                    <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Expanded Product Form</span>
+                <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl transition-all duration-300 hover:bg-slate-800/80 hover:border-slate-700 hover:scale-[1.01] cursor-default">
+                    <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider transition-colors duration-300 hover:text-slate-200">Expanded Product Form</span>
                     <span id="productForm" class="text-slate-200 font-mono text-sm mt-1 block break-all">--</span>
                 </div>
-                <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl">
-                    <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Exponential Notation</span>
+                <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl transition-all duration-300 hover:bg-slate-800/80 hover:border-cyan-500/40 hover:scale-[1.01] cursor-default">
+                    <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider transition-colors duration-300 hover:text-cyan-300">Exponential Notation</span>
                     <span id="exponentialForm" class="text-cyan-300 font-mono text-sm mt-1 block break-all">--</span>
                 </div>
             </div>
@@ -115,15 +183,15 @@
         </div>
     </main>
 
-    <div class="w-full flex justify-center pb-6 z-10 px-4">
-        <a href="index.html" class="w-full max-w-2xl py-3 px-6 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 text-slate-300 hover:text-white font-medium text-center shadow-lg transition-all flex items-center justify-center space-x-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+    <div class="w-full flex justify-center pb-6 z-10 px-4 mt-8">
+        <a href="index.html" class="w-full max-w-2xl py-3 px-6 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 hover:border-cyan-500/50 text-slate-300 hover:text-white font-medium text-center shadow-lg transition-all duration-300 hover:scale-[1.01] flex items-center justify-center space-x-2">
+            <svg class="w-4 h-4 transition-transform duration-300 hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
             <span>Go back to the Home Page</span>
         </a>
     </div>
 
-    <footer class="w-full text-center py-6 text-slate-500 text-xs z-10 border-t border-slate-900/80 bg-slate-950/40 backdrop-blur">
-        <p class="mt-1">Authored by <span class="text-slate-300 font-medium">Rayaan Tasnim</span>. Copyright © 2026. All rights reserved.</p>
+    <footer class="w-full text-center py-6 text-slate-500 text-xs z-10 border-t border-slate-900/80 bg-slate-950/40 backdrop-blur transition-colors duration-300 hover:text-slate-400">
+        <p class="mt-1">Authored by <span class="text-slate-300 font-medium transition-colors duration-300 hover:text-cyan-300 cursor-default">Rayaan Tasnim</span>. Copyright © 2026. All rights reserved.</p>
     </footer>
 
     <script>
@@ -202,6 +270,40 @@
                 return;
             }
 
+            // Pre-check limit exceed safety shutdown directly on raw input length / exponential value
+            let cleanedStr = rawVal.replace(/[\s,]+/g, '');
+            const match = cleanedStr.match(/-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?/);
+            
+            if (match) {
+                let extractedNumStr = match[0];
+                let digitCheckStr = extractedNumStr.replace(/[-.]/g, '');
+                if (extractedNumStr.toLowerCase().includes('e')) {
+                    let parts = extractedNumStr.toLowerCase().split('e');
+                    let expVal = parseInt(parts[1], 10);
+                    if (expVal > 41) {
+                        inputField.blur();
+                        inputField.disabled = true;
+                        inputField.classList.add('opacity-50', 'cursor-not-allowed', 'border-rose-500');
+                        actionBtnContainer.style.opacity = '0';
+                        actionBtnContainer.style.transform = 'translateY(8px)';
+                        actionBtnContainer.style.pointerEvents = 'none';
+                        resultBox.classList.add('hidden');
+                        showNotice("🛑 Limit exceed error: System protection triggered. Input shut down because values exceed 10⁴¹ range limit.", "error");
+                        return;
+                    }
+                } else if (digitCheckStr.length > 41) {
+                    inputField.blur();
+                    inputField.disabled = true;
+                    inputField.classList.add('opacity-50', 'cursor-not-allowed', 'border-rose-500');
+                    actionBtnContainer.style.opacity = '0';
+                    actionBtnContainer.style.transform = 'translateY(8px)';
+                    actionBtnContainer.style.pointerEvents = 'none';
+                    resultBox.classList.add('hidden');
+                    showNotice("🛑 Limit exceed error: System protection triggered. Input shut down because values exceed 10⁴¹ range limit.", "error");
+                    return;
+                }
+            }
+
             actionBtnContainer.style.opacity = '1';
             actionBtnContainer.style.transform = 'translateY(0)';
             actionBtnContainer.style.pointerEvents = 'auto';
@@ -265,12 +367,7 @@
             return a < 0n ? -a : a;
         }
 
-        // Fast Binary GCD / Euclidean for large numbers
-        function bigIntAbs(n) {
-            return n < 0n ? -n : n;
-        }
-
-        // Pollard's Rho with Brent's Cycle Finding Optimization for extreme large integers (like 95 digits)
+        // Pollard's Rho with Brent's Cycle Finding Optimization
         function pollardRhoBrent(n) {
             if (n % 2n === 0n) return 2n;
             if (n % 3n === 0n) return 3n;
@@ -280,7 +377,6 @@
             let m = 100n;
             let c = 1n;
 
-            // Pseudo-random function: f(x) = (x^2 + c) % n
             while (g === 1n) {
                 x = y;
                 for (let i = 0n; i < r; i++) {
@@ -302,7 +398,7 @@
                 if (g === n) {
                     g = 1n;
                     y = ys;
-                    c += 1n; // Change constant if stuck in a loop
+                    c += 1n;
                     r = 1n;
                     q = 1n;
                 }
@@ -310,7 +406,6 @@
             return g;
         }
 
-        // Fully recursive safe factorizer using Brent's method to handle 95+ digit composites without hanging or stack overflows
         function factorizeRecursive(n, factorsList, depth = 0) {
             if (n <= 1n || depth > 100) return;
             if (isPrimeBigInt(n)) {
@@ -330,12 +425,6 @@
             noticeBox.classList.add('hidden');
             resultBox.classList.add('hidden');
 
-            if (rawInputStr.toLowerCase() === 'infinity' || rawInputStr === '∞') {
-                showNotice("Target value approaches Absolute Infinity. Factorization maps infinitely across universal sets.", "info");
-                return;
-            }
-
-            // Remove commas, spaces, punctuation cleanly as requested
             let cleanedStr = rawInputStr.replace(/[\s,]+/g, '');
             
             const hasDigits = /\d/.test(cleanedStr);
@@ -344,24 +433,57 @@
                 return;
             }
 
-            // Extract number blocks containing floats/decimals or signed integers
-            const match = cleanedStr.match(/-?\d+(?:\.\d+)?/);
+            const match = cleanedStr.match(/-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?/);
             if (!match) {
                 showNotice("Please provide a valid numeric entry scale.", "error");
                 return;
             }
 
             let extractedNumStr = match[0];
+
+            let digitCheckStr = extractedNumStr.replace(/[-.]/g, '');
+            if (extractedNumStr.toLowerCase().includes('e')) {
+                let parts = extractedNumStr.toLowerCase().split('e');
+                let expVal = parseInt(parts[1], 10);
+                if (expVal > 41) {
+                    inputField.blur();
+                    inputField.disabled = true;
+                    inputField.classList.add('opacity-50', 'cursor-not-allowed', 'border-rose-500');
+                    showNotice("🛑 Limit exceed error: System protection triggered. Input shut down because values exceed 10⁴¹ range limit.", "error");
+                    return;
+                }
+            } else if (digitCheckStr.length > 41) {
+                inputField.blur();
+                inputField.disabled = true;
+                inputField.classList.add('opacity-50', 'cursor-not-allowed', 'border-rose-500');
+                showNotice("🛑 Limit exceed error: System protection triggered. Input shut down because values exceed 10⁴¹ range limit.", "error");
+                return;
+            }
+
             let bigNum;
             let displayValStr = extractedNumStr;
 
-            // Handle decimal/float formatting inputs by truncating to integer base for factorization
             if (extractedNumStr.includes('.')) {
                 let parts = extractedNumStr.split('.');
                 displayValStr = extractedNumStr;
                 extractedNumStr = parts[0];
                 if (extractedNumStr === "" || extractedNumStr === "-") {
                     extractedNumStr = "0";
+                }
+            }
+
+            // Calculate magnitude (10 to power ---)
+            let absStr = extractedNumStr.startsWith('-') ? extractedNumStr.slice(1) : extractedNumStr;
+            let magnitudeStr = "0";
+            if (absStr.includes('e') || absStr.includes('E')) {
+                magnitudeStr = absStr;
+            } else {
+                let trimmedInt = absStr.replace(/^0+/, '');
+                if (trimmedInt === "") {
+                    magnitudeStr = "0";
+                } else {
+                    let expPower = trimmedInt.length - 1;
+                    magnitudeStr = `10<sup>${expPower}</sup>`;
                 }
             }
 
@@ -386,16 +508,14 @@
 
             if (workNum === 1n) {
                 let classification = isNegative ? "Negative Unit (-1)" : "Unity (1)";
-                displayResults(displayValStr, classification, isNegative ? ["-1"] : ["1"], isNegative ? "-1" : "1", isNegative ? "-1" : "1");
+                displayResults(displayValStr, magnitudeStr, classification, isNegative ? ["-1"] : ["1"], isNegative ? "-1" : "1", isNegative ? "-1" : "1");
                 return;
             }
 
-            // Quick small trial division for micro-optimizing small primes before running Pollard's Brent
             let primeStatus = isPrimeBigInt(workNum);
             let factors = [];
 
             if (!primeStatus) {
-                // Pre-divide small primes for lightning-fast execution
                 let smallPrimes = [2n, 3n, 5n, 7n, 11n, 13n, 17n, 19n, 23n, 29n, 31n, 37n, 41n, 43n, 47n];
                 for (let p of smallPrimes) {
                     while (workNum % p === 0n) {
@@ -445,11 +565,12 @@
                 showNotice("✨ Exact Prime Number Identified! Displaying matched configuration factors below.", "success");
             }
 
-            displayResults(displayValStr, classificationText, uniqueFactorsStr, productStr, expStr);
+            displayResults(displayValStr, magnitudeStr, classificationText, uniqueFactorsStr, productStr, expStr);
         }
 
-        function displayResults(inputtedVal, classification, uniqueFactors, product, exponential) {
+        function displayResults(inputtedVal, magnitude, classification, uniqueFactors, product, exponential) {
             document.getElementById('inputtedValDisplay').textContent = inputtedVal;
+            document.getElementById('inputMagnitudeDisplay').innerHTML = magnitude;
             document.getElementById('classificationVal').textContent = classification;
             document.getElementById('factorsList').textContent = uniqueFactors;
             document.getElementById('productForm').textContent = product;
@@ -467,6 +588,7 @@
                 noticeBox.classList.add('bg-cyan-500/10', 'border-cyan-500/30', 'text-cyan-300');
             }
             noticeBox.textContent = message;
+            noticeBox.classList.add('block');
             noticeBox.classList.remove('hidden');
         }
     </script>

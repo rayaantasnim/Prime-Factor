@@ -2,7 +2,7 @@
 <html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Quantum Prime Engine - Secure Mathematical Matrix</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2438bdf8'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -34,6 +34,7 @@
             background-color: #030712;
             color: #f8fafc;
             font-family: system-ui, -apple-system, sans-serif;
+            -webkit-text-size-adjust: 100%;
         }
         #canvas-container {
             position: fixed;
@@ -45,7 +46,7 @@
             pointer-events: none;
         }
         .glass-panel {
-            background: rgba(15, 23, 42, 0.75);
+            background: rgba(15, 23, 42, 0.82);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(56, 189, 248, 0.2);
@@ -64,12 +65,62 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(3, 7, 18, 0.90);
+            background: rgba(3, 7, 18, 0.92);
             z-index: 1;
         }
         .math-bg-section > * {
             position: relative;
             z-index: 2;
+        }
+
+        /* Fine-tuned Responsive Media Queries for iPhone and smaller screen widths */
+        @media screen and (max-width: 640px) {
+            header {
+                padding-top: 1rem !important;
+                padding-bottom: 0.5rem !important;
+                padding-left: 0.5rem !important;
+                padding-right: 0.5rem !important;
+            }
+            .glass-panel {
+                padding: 1rem !important;
+                border-radius: 1rem !important;
+            }
+            h1 {
+                font-size: 1.45rem !important;
+                line-height: 1.25 !important;
+            }
+            h2 {
+                font-size: 1.25rem !important;
+            }
+            p {
+                font-size: 0.85rem !important;
+            }
+            input[type="text"] {
+                font-size: 16px !important; /* Prevents auto-zoom on iOS Safari */
+                padding: 0.65rem 0.85rem !important;
+            }
+            main {
+                padding-top: 0.5rem !important;
+                padding-bottom: 0.5rem !important;
+                padding-left: 0.5rem !important;
+                padding-right: 0.5rem !important;
+            }
+            .grid-cols-1.md\:grid-cols-2 {
+                gap: 0.75rem !important;
+            }
+        }
+
+        @media screen and (max-width: 380px) {
+            h1 {
+                font-size: 1.25rem !important;
+            }
+            .glass-panel {
+                padding: 0.75rem !important;
+            }
+            input[type="text"] {
+                padding: 0.5rem 0.75rem !important;
+                font-size: 16px !important;
+            }
         }
     </style>
 </head>
@@ -77,121 +128,118 @@
 
     <div id="canvas-container"></div>
 
-    <!-- Hero Banner Section -->
-    <header class="w-full px-4 pt-12 pb-8 z-10 max-w-6xl mx-auto">
-        <div class="glass-panel p-8 md:p-12 rounded-3xl relative overflow-hidden transition-all duration-500 hover:border-cyan-500/40 hover:shadow-cyan-500/20">
+    <header class="w-full px-4 pt-10 pb-6 z-10 max-w-6xl mx-auto">
+        <div class="glass-panel p-6 md:p-12 rounded-3xl relative overflow-hidden transition-all duration-500 hover:border-cyan-500/40 hover:shadow-cyan-500/20">
             <div class="absolute -top-32 -right-32 w-64 h-64 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute -bottom-32 -left-32 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
 
-            <div class="text-center max-w-3xl mx-auto mb-10">
+            <div class="text-center max-w-3xl mx-auto mb-6 md:mb-10">
                 <span class="text-xs uppercase tracking-widest px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 font-semibold transition-all duration-300 hover:bg-cyan-500/20 hover:scale-105 cursor-default inline-block">High-Capacity Processing Matrix</span>
-                <h1 class="text-4xl md:text-5xl font-extrabold mt-4 tracking-tight bg-gradient-to-r from-cyan-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent transition-all duration-300 hover:brightness-125 cursor-default">Unlimited Time Engine with Range up to 10³²</h1>
-                <p class="text-slate-300 text-base md:text-lg mt-4 leading-relaxed transition-colors duration-300 hover:text-white cursor-default">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold mt-3 tracking-tight bg-gradient-to-r from-cyan-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent transition-all duration-300 hover:brightness-125 cursor-default">Unlimited Time Engine with Range up to 10³²</h1>
+                <p class="text-slate-300 text-sm md:text-lg mt-3 md:mt-4 leading-relaxed transition-colors duration-300 hover:text-white cursor-default">
                     Designed to run for unlimited time with a numerical operational range up to 10 to the power 32. Values exceeding 10 to the power 32 trigger an automatic boundary limit exceed error with dynamic range recovery.
                 </p>
             </div>
 
-            <!-- Horizontal Cards Breakable in Smaller Screens with Hover Effects -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div class="bg-slate-900/80 border border-slate-800 p-5 rounded-2xl flex flex-col justify-between transition-all duration-300 hover:scale-[1.03] hover:border-cyan-500/50 hover:shadow-lg hover:shadow-cyan-500/10 hover:bg-slate-800/90 cursor-default">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+                <div class="bg-slate-900/80 border border-slate-800 p-4 sm:p-5 rounded-2xl flex flex-col justify-between transition-all duration-300 hover:scale-[1.03] hover:border-cyan-500/50 hover:shadow-lg hover:shadow-cyan-500/10 hover:bg-slate-800/90 cursor-default">
                     <div>
-                        <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-3 font-bold transition-all duration-300 hover:bg-cyan-500/30 hover:scale-110">01</div>
-                        <h3 class="text-white font-semibold text-base transition-colors duration-300 hover:text-cyan-300">Negatives Scale</h3>
-                        <p class="text-slate-400 text-sm mt-1 transition-colors duration-300 hover:text-slate-200">Full structural handling of negative integer factorizations seamlessly.</p>
+                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-3 font-bold transition-all duration-300 hover:bg-cyan-500/30 hover:scale-110 text-sm">01</div>
+                        <h3 class="text-white font-semibold text-sm sm:text-base transition-colors duration-300 hover:text-cyan-300">Negatives Scale</h3>
+                        <p class="text-slate-400 text-xs sm:text-sm mt-1 transition-colors duration-300 hover:text-slate-200">Full structural handling of negative integer factorizations seamlessly.</p>
                     </div>
                 </div>
-                <div class="bg-slate-900/80 border border-slate-800 p-5 rounded-2xl flex flex-col justify-between transition-all duration-300 hover:scale-[1.03] hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/10 hover:bg-slate-800/90 cursor-default">
+                <div class="bg-slate-900/80 border border-slate-800 p-4 sm:p-5 rounded-2xl flex flex-col justify-between transition-all duration-300 hover:scale-[1.03] hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/10 hover:bg-slate-800/90 cursor-default">
                     <div>
-                        <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-3 font-bold transition-all duration-300 hover:bg-purple-500/30 hover:scale-110">02</div>
-                        <h3 class="text-white font-semibold text-base transition-colors duration-300 hover:text-purple-300">Large Numbers</h3>
-                        <p class="text-slate-400 text-sm mt-1 transition-colors duration-300 hover:text-slate-200">Deep computational depth optimized for massive composite structures.</p>
+                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-3 font-bold transition-all duration-300 hover:bg-purple-500/30 hover:scale-110 text-sm">02</div>
+                        <h3 class="text-white font-semibold text-sm sm:text-base transition-colors duration-300 hover:text-purple-300">Large Numbers</h3>
+                        <p class="text-slate-400 text-xs sm:text-sm mt-1 transition-colors duration-300 hover:text-slate-200">Deep computational depth optimized for massive composite structures.</p>
                     </div>
                 </div>
-                <div class="bg-slate-900/80 border border-slate-800 p-5 rounded-2xl flex flex-col justify-between sm:col-span-2 lg:col-span-1 transition-all duration-300 hover:scale-[1.03] hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/10 hover:bg-slate-800/90 cursor-default">
+                <div class="bg-slate-900/80 border border-slate-800 p-4 sm:p-5 rounded-2xl flex flex-col justify-between sm:col-span-2 lg:col-span-1 transition-all duration-300 hover:scale-[1.03] hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/10 hover:bg-slate-800/90 cursor-default">
                     <div>
-                        <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-3 font-bold transition-all duration-300 hover:bg-blue-500/30 hover:scale-110">03</div>
-                        <h3 class="text-white font-semibold text-base transition-colors duration-300 hover:text-blue-300">Precision Scale</h3>
-                        <p class="text-slate-400 text-sm mt-1 transition-colors duration-300 hover:text-slate-200">Strict range controls enforcing safety boundaries up to 10³² digits.</p>
+                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-3 font-bold transition-all duration-300 hover:bg-blue-500/30 hover:scale-110 text-sm">03</div>
+                        <h3 class="text-white font-semibold text-sm sm:text-base transition-colors duration-300 hover:text-blue-300">Precision Scale</h3>
+                        <p class="text-slate-400 text-xs sm:text-sm mt-1 transition-colors duration-300 hover:text-slate-200">Strict range controls enforcing safety boundaries up to 10³² digits.</p>
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Calculator Section with Dedicated Mathematical Background -->
-    <main class="flex-grow flex items-center justify-center px-4 py-8 z-10 math-bg-section w-full">
-        <div class="glass-panel w-full max-w-2xl p-8 rounded-2xl relative overflow-hidden transition-all duration-500 hover:border-cyan-500/40 hover:shadow-2xl hover:shadow-cyan-500/10">
+    <main class="flex-grow flex items-center justify-center px-3 sm:px-4 py-6 z-10 math-bg-section w-full">
+        <div class="glass-panel w-full max-w-2xl p-5 sm:p-8 rounded-2xl relative overflow-hidden transition-all duration-500 hover:border-cyan-500/40 hover:shadow-2xl hover:shadow-cyan-500/10">
             
             <div class="absolute -top-24 -right-24 w-48 h-48 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
 
-            <div class="text-center mb-8">
+            <div class="text-center mb-6 sm:mb-8">
                 <span class="text-xs uppercase tracking-widest px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 font-semibold transition-all duration-300 hover:bg-cyan-500/25 hover:scale-105 cursor-default inline-block">Next-Gen Mathematical Matrix</span>
-                <h2 class="text-3xl font-extrabold mt-3 tracking-tight bg-gradient-to-r from-cyan-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent transition-all duration-300 hover:brightness-125 cursor-default">Quantum Prime Engine</h2>
-                <p class="text-slate-400 text-sm mt-2 transition-colors duration-300 hover:text-slate-200 cursor-default">Explore absolute factorization across supported number ranges.</p>
+                <h2 class="text-2xl sm:text-3xl font-extrabold mt-2 sm:mt-3 tracking-tight bg-gradient-to-r from-cyan-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent transition-all duration-300 hover:brightness-125 cursor-default">Quantum Prime Engine</h2>
+                <p class="text-slate-400 text-xs sm:text-sm mt-1 sm:mt-2 transition-colors duration-300 hover:text-slate-200 cursor-default">Explore absolute factorization across supported number ranges.</p>
             </div>
 
-            <div class="space-y-6">
+            <div class="space-y-4 sm:space-y-6">
                 <div>
-                    <label for="numberInput" class="block text-sm font-medium text-slate-300 mb-2 transition-colors duration-300 hover:text-cyan-400 cursor-pointer">Input Target Integer:</label>
+                    <label for="numberInput" class="block text-xs sm:text-sm font-medium text-slate-300 mb-1.5 sm:mb-2 transition-colors duration-300 hover:text-cyan-400 cursor-pointer">Input Target Integer:</label>
                     <div class="relative">
                         <input type="text" id="numberInput" autocomplete="off" placeholder="Enter any number (e.g., -42, 1e25, 997)..." 
-                            class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-3.5 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 hover:border-cyan-500/50 hover:bg-slate-900 transition-all text-lg shadow-inner">
+                            class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-3.5 sm:px-4 py-3 sm:py-3.5 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 hover:border-cyan-500/50 hover:bg-slate-900 transition-all text-base sm:text-lg shadow-inner">
                     </div>
                 </div>
 
                 <div id="actionButtonContainer" class="transition-all duration-300 opacity-0 transform translate-y-2 pointer-events-none">
-                    <button id="processBtn" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold shadow-lg shadow-cyan-500/25 transition-all transform hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center space-x-2">
+                    <button id="processBtn" class="w-full py-3 sm:py-3.5 px-6 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold shadow-lg shadow-cyan-500/25 transition-all transform hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center space-x-2 text-sm sm:text-base">
                         <span>Execute Quantum Analysis</span>
-                        <svg class="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                     </button>
                 </div>
             </div>
 
-            <div id="noticeBox" class="hidden mt-6 p-4 rounded-xl border text-sm transition-all duration-300 hover:brightness-110"></div>
+            <div id="noticeBox" class="hidden mt-4 sm:mt-6 p-3 sm:p-4 rounded-xl border text-xs sm:text-sm transition-all duration-300 hover:brightness-110"></div>
 
-            <div id="resultBox" class="hidden mt-6 space-y-4 pt-6 border-t border-slate-800/80 animate-fadeIn">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl transition-all duration-300 hover:bg-slate-800/80 hover:border-cyan-500/40 hover:scale-[1.01] cursor-default">
-                        <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider transition-colors duration-300 hover:text-cyan-300">Inputted Number Recognized</span>
-                        <span id="inputtedValDisplay" class="text-cyan-200 font-mono text-base mt-1 block break-all">--</span>
+            <div id="resultBox" class="hidden mt-4 sm:mt-6 space-y-3 sm:space-y-4 pt-4 sm:pt-6 border-t border-slate-800/80 animate-fadeIn">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+                    <div class="bg-slate-900/60 border border-slate-800 p-3.5 sm:p-4 rounded-xl transition-all duration-300 hover:bg-slate-800/80 hover:border-cyan-500/40 hover:scale-[1.01] cursor-default">
+                        <span class="block text-[11px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider transition-colors duration-300 hover:text-cyan-300">Inputted Number Recognized</span>
+                        <span id="inputtedValDisplay" class="text-cyan-200 font-mono text-sm sm:text-base mt-1 block break-all">--</span>
                     </div>
-                    <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl transition-all duration-300 hover:bg-slate-800/80 hover:border-cyan-500/40 hover:scale-[1.01] cursor-default">
-                        <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider transition-colors duration-300 hover:text-cyan-300">Input Scale Magnitude</span>
-                        <span id="inputMagnitudeDisplay" class="text-cyan-300 font-mono text-base mt-1 block break-all">--</span>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl transition-all duration-300 hover:bg-slate-800/80 hover:border-cyan-500/40 hover:scale-[1.01] cursor-default">
-                        <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider transition-colors duration-300 hover:text-cyan-300">Classification</span>
-                        <span id="classificationVal" class="text-cyan-400 font-bold text-base mt-1 block">--</span>
-                    </div>
-                    <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl transition-all duration-300 hover:bg-slate-800/80 hover:border-purple-500/40 hover:scale-[1.01] cursor-default">
-                        <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider transition-colors duration-300 hover:text-purple-300">Prime Factors</span>
-                        <span id="factorsList" class="text-purple-400 font-bold text-base mt-1 block truncate">--</span>
+                    <div class="bg-slate-900/60 border border-slate-800 p-3.5 sm:p-4 rounded-xl transition-all duration-300 hover:bg-slate-800/80 hover:border-cyan-500/40 hover:scale-[1.01] cursor-default">
+                        <span class="block text-[11px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider transition-colors duration-300 hover:text-cyan-300">Input Scale Magnitude</span>
+                        <span id="inputMagnitudeDisplay" class="text-cyan-300 font-mono text-sm sm:text-base mt-1 block break-all">--</span>
                     </div>
                 </div>
-                <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl transition-all duration-300 hover:bg-slate-800/80 hover:border-slate-700 hover:scale-[1.01] cursor-default">
-                    <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider transition-colors duration-300 hover:text-slate-200">Expanded Product Form</span>
-                    <span id="productForm" class="text-slate-200 font-mono text-sm mt-1 block break-all">--</span>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+                    <div class="bg-slate-900/60 border border-slate-800 p-3.5 sm:p-4 rounded-xl transition-all duration-300 hover:bg-slate-800/80 hover:border-cyan-500/40 hover:scale-[1.01] cursor-default">
+                        <span class="block text-[11px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider transition-colors duration-300 hover:text-cyan-300">Classification</span>
+                        <span id="classificationVal" class="text-cyan-400 font-bold text-sm sm:text-base mt-1 block">--</span>
+                    </div>
+                    <div class="bg-slate-900/60 border border-slate-800 p-3.5 sm:p-4 rounded-xl transition-all duration-300 hover:bg-slate-800/80 hover:border-purple-500/40 hover:scale-[1.01] cursor-default">
+                        <span class="block text-[11px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider transition-colors duration-300 hover:text-purple-300">Prime Factors</span>
+                        <span id="factorsList" class="text-purple-400 font-bold text-sm sm:text-base mt-1 block truncate">--</span>
+                    </div>
                 </div>
-                <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl transition-all duration-300 hover:bg-slate-800/80 hover:border-cyan-500/40 hover:scale-[1.01] cursor-default">
-                    <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider transition-colors duration-300 hover:text-cyan-300">Exponential Notation</span>
-                    <span id="exponentialForm" class="text-cyan-300 font-mono text-sm mt-1 block break-all">--</span>
+                <div class="bg-slate-900/60 border border-slate-800 p-3.5 sm:p-4 rounded-xl transition-all duration-300 hover:bg-slate-800/80 hover:border-slate-700 hover:scale-[1.01] cursor-default">
+                    <span class="block text-[11px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider transition-colors duration-300 hover:text-slate-200">Expanded Product Form</span>
+                    <span id="productForm" class="text-slate-200 font-mono text-xs sm:text-sm mt-1 block break-all">--</span>
+                </div>
+                <div class="bg-slate-900/60 border border-slate-800 p-3.5 sm:p-4 rounded-xl transition-all duration-300 hover:bg-slate-800/80 hover:border-cyan-500/40 hover:scale-[1.01] cursor-default">
+                    <span class="block text-[11px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider transition-colors duration-300 hover:text-cyan-300">Exponential Notation</span>
+                    <span id="exponentialForm" class="text-cyan-300 font-mono text-xs sm:text-sm mt-1 block break-all">--</span>
                 </div>
             </div>
 
         </div>
     </main>
 
-    <div class="w-full flex justify-center pb-6 z-10 px-4 mt-8">
-        <a href="index.html" class="w-full max-w-2xl py-3 px-6 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 hover:border-cyan-500/50 text-slate-300 hover:text-white font-medium text-center shadow-lg transition-all duration-300 hover:scale-[1.01] flex items-center justify-center space-x-2">
+    <div class="w-full flex justify-center pb-4 sm:pb-6 z-10 px-3 sm:px-4 mt-6 sm:mt-8">
+        <a href="index.html" class="w-full max-w-2xl py-3 px-6 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 hover:border-cyan-500/50 text-slate-300 hover:text-white font-medium text-center shadow-lg transition-all duration-300 hover:scale-[1.01] flex items-center justify-center space-x-2 text-sm sm:text-base">
             <svg class="w-4 h-4 transition-transform duration-300 hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
             <span>Go back to the Home Page</span>
         </a>
     </div>
 
-    <footer class="w-full text-center py-6 text-slate-500 text-xs z-10 border-t border-slate-900/80 bg-slate-950/40 backdrop-blur transition-colors duration-300 hover:text-slate-400">
+    <footer class="w-full text-center py-5 sm:py-6 text-slate-500 text-xs z-10 border-t border-slate-900/80 bg-slate-950/40 backdrop-blur transition-colors duration-300 hover:text-slate-400 px-3">
         <p class="mt-1">Authored by <span class="text-slate-300 font-medium transition-colors duration-300 hover:text-cyan-300 cursor-default">Rayaan Tasnim</span>. Copyright © 2026. All rights reserved.</p>
     </footer>
 
@@ -295,7 +343,6 @@
             }
 
             if (isExceeding) {
-                // Prevent increasing number when limit exceeded; allow backspace/decrease
                 if (rawVal.length > previousInput.length) {
                     inputField.value = previousInput;
                     return;
@@ -308,7 +355,6 @@
                     resultBox.classList.add('hidden');
                     showNotice("🛑 Limit exceed error: System protection triggered. Value exceeds 10³² range limit. Please decrease your input to resume.", "error");
 
-                    // Check if current decreased value is still exceeding
                     let currentCleaned = rawVal.replace(/[\s,]+/g, '');
                     let currentMatch = currentCleaned.match(/-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?/);
                     if (currentMatch) {
@@ -342,7 +388,6 @@
         inputField.addEventListener('input', evaluateNumber);
         processBtn.addEventListener('click', () => processFactorization(inputField.value.trim()));
 
-        // Modular Exponentiation for Miller-Rabin
         function modularExponentiation(base, exp, mod) {
             let res = 1n;
             base = base % mod;
@@ -354,7 +399,6 @@
             return res;
         }
 
-        // Miller-Rabin Primality Test
         function isPrimeBigInt(n) {
             if (n <= 1n) return false;
             if (n <= 3n) return true;
@@ -385,7 +429,6 @@
             return true;
         }
 
-        // Greatest Common Divisor
         function gcd(a, b) {
             while (b !== 0n) {
                 let temp = b;
@@ -395,7 +438,6 @@
             return a < 0n ? -a : a;
         }
 
-        // Pollard's Rho with Brent's Cycle Finding Optimization
         function pollardRhoBrent(n) {
             if (n % 2n === 0n) return 2n;
             if (n % 3n === 0n) return 3n;
@@ -494,7 +536,6 @@
                 }
             }
 
-            // Calculate magnitude (10 to power ---)
             let absStr = extractedNumStr.startsWith('-') ? extractedNumStr.slice(1) : extractedNumStr;
             let magnitudeStr = "0";
             if (absStr.includes('e') || absStr.includes('E')) {
@@ -601,7 +642,7 @@
         }
 
         function showNotice(message, type) {
-            noticeBox.className = "mt-6 p-4 rounded-xl border text-sm transition-all ";
+            noticeBox.className = "mt-4 sm:mt-6 p-3 sm:p-4 rounded-xl border text-xs sm:text-sm transition-all ";
             if (type === 'error') {
                 noticeBox.classList.add('bg-rose-500/10', 'border-rose-500/30', 'text-rose-300');
             } else if (type === 'success') {

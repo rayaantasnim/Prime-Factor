@@ -87,7 +87,7 @@
                 <span class="text-xs uppercase tracking-widest px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 font-semibold transition-all duration-300 hover:bg-cyan-500/20 hover:scale-105 cursor-default inline-block">High-Capacity Processing Matrix</span>
                 <h1 class="text-4xl md:text-5xl font-extrabold mt-4 tracking-tight bg-gradient-to-r from-cyan-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent transition-all duration-300 hover:brightness-125 cursor-default">Unlimited Time Engine with Range up to 10³²</h1>
                 <p class="text-slate-300 text-base md:text-lg mt-4 leading-relaxed transition-colors duration-300 hover:text-white cursor-default">
-                    Designed to run for unlimited time with a numerical operational range up to 10 to the power 32. Values exceeding 10 to the power 32 trigger an automatic boundary limit exceed error.
+                    Designed to run for unlimited time with a numerical operational range up to 10 to the power 32. Values exceeding 10 to the power 32 trigger an automatic boundary limit exceed error with dynamic range recovery.
                 </p>
             </div>
 
@@ -252,29 +252,34 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // Application Logic & Ultra-Optimized BigInt Engine
+        // Application Logic & Ultra-Optimized BigInt Engine with Dynamic Range Recovery
         const inputField = document.getElementById('numberInput');
         const actionBtnContainer = document.getElementById('actionButtonContainer');
         const processBtn = document.getElementById('processBtn');
         const noticeBox = document.getElementById('noticeBox');
         const resultBox = document.getElementById('resultBox');
 
+        let previousInput = '';
+
         function evaluateNumber() {
             const rawVal = inputField.value.trim();
             
             if (!rawVal) {
+                previousInput = '';
                 actionBtnContainer.style.opacity = '0';
                 actionBtnContainer.style.transform = 'translateY(8px)';
                 actionBtnContainer.style.pointerEvents = 'none';
                 noticeBox.classList.add('hidden');
                 resultBox.classList.add('hidden');
+                inputField.classList.remove('border-rose-500');
                 return;
             }
 
-            // Pre-check limit exceed safety shutdown directly on raw input length / exponential value
+            // Pre-check limit exceed safety boundary
             let cleanedStr = rawVal.replace(/[\s,]+/g, '');
             const match = cleanedStr.match(/-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?/);
             
+            let isExceeding = false;
             if (match) {
                 let extractedNumStr = match[0];
                 let digitCheckStr = extractedNumStr.replace(/[-.]/g, '');
@@ -282,28 +287,50 @@
                     let parts = extractedNumStr.toLowerCase().split('e');
                     let expVal = parseInt(parts[1], 10);
                     if (expVal > 32) {
-                        inputField.blur();
-                        inputField.disabled = true;
-                        inputField.classList.add('opacity-50', 'cursor-not-allowed', 'border-rose-500');
-                        actionBtnContainer.style.opacity = '0';
-                        actionBtnContainer.style.transform = 'translateY(8px)';
-                        actionBtnContainer.style.pointerEvents = 'none';
-                        resultBox.classList.add('hidden');
-                        showNotice("🛑 Limit exceed error: System protection triggered. Input shut down because values exceed 10³² range limit.", "error");
-                        return;
+                        isExceeding = true;
                     }
                 } else if (digitCheckStr.length > 32) {
-                    inputField.blur();
-                    inputField.disabled = true;
-                    inputField.classList.add('opacity-50', 'cursor-not-allowed', 'border-rose-500');
+                    isExceeding = true;
+                }
+            }
+
+            if (isExceeding) {
+                // Prevent increasing number when limit exceeded; allow backspace/decrease
+                if (rawVal.length > previousInput.length) {
+                    inputField.value = previousInput;
+                    return;
+                } else {
+                    previousInput = rawVal;
+                    inputField.classList.add('border-rose-500');
                     actionBtnContainer.style.opacity = '0';
                     actionBtnContainer.style.transform = 'translateY(8px)';
                     actionBtnContainer.style.pointerEvents = 'none';
                     resultBox.classList.add('hidden');
-                    showNotice("🛑 Limit exceed error: System protection triggered. Input shut down because values exceed 10³² range limit.", "error");
-                    return;
+                    showNotice("🛑 Limit exceed error: System protection triggered. Value exceeds 10³² range limit. Please decrease your input to resume.", "error");
+
+                    // Check if current decreased value is still exceeding
+                    let currentCleaned = rawVal.replace(/[\s,]+/g, '');
+                    let currentMatch = currentCleaned.match(/-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?/);
+                    if (currentMatch) {
+                        let extStr = currentMatch[0];
+                        let digStr = extStr.replace(/[-.]/g, '');
+                        let stillExceeds = false;
+                        if (extStr.toLowerCase().includes('e')) {
+                            let parts = extStr.toLowerCase().split('e');
+                            if (parseInt(parts[1], 10) > 32) stillExceeds = true;
+                        } else if (digStr.length > 32) {
+                            stillExceeds = true;
+                        }
+                        if (stillExceeds) {
+                            return;
+                        }
+                    }
                 }
             }
+
+            previousInput = rawVal;
+            inputField.classList.remove('border-rose-500');
+            noticeBox.classList.add('hidden');
 
             actionBtnContainer.style.opacity = '1';
             actionBtnContainer.style.transform = 'translateY(0)';
@@ -447,17 +474,11 @@
                 let parts = extractedNumStr.toLowerCase().split('e');
                 let expVal = parseInt(parts[1], 10);
                 if (expVal > 32) {
-                    inputField.blur();
-                    inputField.disabled = true;
-                    inputField.classList.add('opacity-50', 'cursor-not-allowed', 'border-rose-500');
-                    showNotice("🛑 Limit exceed error: System protection triggered. Input shut down because values exceed 10³² range limit.", "error");
+                    showNotice("🛑 Limit exceed error: System protection triggered. Value exceeds 10³² range limit. Please decrease your input to resume.", "error");
                     return;
                 }
             } else if (digitCheckStr.length > 32) {
-                inputField.blur();
-                inputField.disabled = true;
-                inputField.classList.add('opacity-50', 'cursor-not-allowed', 'border-rose-500');
-                showNotice("🛑 Limit exceed error: System protection triggered. Input shut down because values exceed 10³² range limit.", "error");
+                showNotice("🛑 Limit exceed error: System protection triggered. Value exceeds 10³² range limit. Please decrease your input to resume.", "error");
                 return;
             }
 

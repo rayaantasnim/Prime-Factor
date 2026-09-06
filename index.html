@@ -2,7 +2,7 @@
 <html lang="en" class="scroll-smooth dark" id="html-root">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="description" content="The universe's ultimate dual-service prime factorization platform featuring elite Olympiad testing and an advanced real-time calculation engine. Authored by Rayaan Tasnim.">
   <meta name="keywords" content="Prime Factorization, Math Olympiad, Calculator, Arithmetic, Practice Space, Rayaan Tasnim">
   <meta name="author" content="Rayaan Tasnim">
@@ -29,7 +29,7 @@
       }
     }
   </script>
-  <!-- Upgraded Google Fonts (Orbitron & Rajdhani for Maximum Sci-Fi/Cosmic Vibe) -->
+  <!-- Upgraded Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&family=Plus+Jakarta+Sans:wght@300;500;800&family=Syncopate:wght@700&display=swap" rel="stylesheet">
   <!-- Three.js, GSAP, and ScrollTrigger CDNs -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -42,7 +42,7 @@
       overflow-x: hidden;
       background-color: #000208;
       color: #f0f6fc;
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
     h1, h2, h3, .font-syncopate, .font-orbitron {
       font-family: 'Orbitron', 'Syncopate', sans-serif;
@@ -59,32 +59,31 @@
       z-index: -1;
       pointer-events: none;
     }
-    /* Upgraded Cosmic Universe Theme Styles */
     .glass-panel {
-      background: rgba(2, 6, 23, 0.82);
-      backdrop-filter: blur(30px);
-      -webkit-backdrop-filter: blur(30px);
+      background: rgba(2, 6, 23, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(0, 240, 255, 0.25);
-      box-shadow: 0 0 60px rgba(0, 0, 0, 0.95), inset 0 0 25px rgba(0, 240, 255, 0.08);
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.95), inset 0 0 20px rgba(0, 240, 255, 0.08);
     }
     .glass-panel-purple {
-      background: rgba(10, 2, 20, 0.82);
-      backdrop-filter: blur(30px);
-      -webkit-backdrop-filter: blur(30px);
+      background: rgba(10, 2, 20, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(176, 38, 255, 0.25);
-      box-shadow: 0 0 60px rgba(0, 0, 0, 0.95), inset 0 0 25px rgba(176, 38, 255, 0.08);
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.95), inset 0 0 20px rgba(176, 38, 255, 0.08);
     }
     .neon-text-glow {
-      text-shadow: 0 0 25px rgba(0, 240, 255, 0.9), 0 0 50px rgba(176, 38, 255, 0.7);
+      text-shadow: 0 0 20px rgba(0, 240, 255, 0.8), 0 0 40px rgba(176, 38, 255, 0.6);
     }
     .neon-purple-glow {
-      text-shadow: 0 0 25px rgba(176, 38, 255, 0.9), 0 0 50px rgba(255, 0, 127, 0.7);
+      text-shadow: 0 0 20px rgba(176, 38, 255, 0.8), 0 0 40px rgba(255, 0, 127, 0.6);
     }
     .mesh-gradient {
       background: radial-gradient(circle at 50% 20%, rgba(176, 38, 255, 0.15), rgba(0, 240, 255, 0.1), rgba(0, 2, 8, 1));
     }
 
-    /* Horizontal Scrolling Container Customizations */
+    /* Responsive Horizontal Scrolling Container */
     .horizontal-section-wrapper {
       position: relative;
       width: 100%;
@@ -92,23 +91,47 @@
     }
     .horizontal-track {
       display: flex;
-      gap: 3rem;
+      gap: 1.5rem;
       width: max-content;
-      padding: 2rem 4rem;
+      padding: 1.5rem 2rem;
       will-change: transform;
     }
 
-    /* Custom Scrollbar for responsiveness & beauty */
+    /* Media Queries for Mobile Adjustments */
+    @media (max-width: 768px) {
+      body {
+        font-size: 0.95rem;
+      }
+      .horizontal-section-wrapper {
+        height: auto !important;
+        overflow: visible !important;
+      }
+      .horizontal-track {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        transform: none !important;
+        gap: 2rem !important;
+        padding: 1rem !important;
+      }
+      .carousel-card {
+        width: 100% !important;
+        height: auto !important;
+        min-height: 440px !important;
+      }
+    }
+
+    /* Custom Scrollbar */
     ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
     }
     ::-webkit-scrollbar-track {
       background: #000208;
     }
     ::-webkit-scrollbar-thumb {
       background: #00f0ff55;
-      border-radius: 4px;
+      border-radius: 3px;
     }
     ::-webkit-scrollbar-thumb:hover {
       background: #00f0ff;
@@ -117,27 +140,28 @@
 </head>
 <body class="selection:bg-cyan-400 selection:text-black mesh-gradient transition-colors duration-500">
 
-  <!-- 3D Interactive Cosmic Universe Background Canvas -->
+  <!-- 3D Interactive Background Canvas -->
   <div id="canvas-container"></div>
 
-  <!-- Upgraded Top Navbar with Interactive Toggler & Dual Buttons -->
-  <nav class="fixed top-0 left-0 w-full z-50 glass-panel border-b border-cyan-500/30 px-6 py-4 transition-all duration-300">
-    <div class="max-w-7xl mx-auto flex items-center justify-between">
-      <a href="#" class="font-orbitron font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-teal-200 to-purple-400 text-base sm:text-xl tracking-wider flex items-center gap-3">
-        <span class="animate-pulse text-cyan-400 text-xl">⚡</span> PRIME DUAL PORTAL
+  <!-- Top Navbar -->
+  <nav class="fixed top-0 left-0 w-full z-50 glass-panel border-b border-cyan-500/30 px-4 sm:px-6 py-3 transition-all duration-300">
+    <div class="max-w-7xl mx-auto flex items-center justify-between relative">
+      <a href="#" class="font-orbitron font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-teal-200 to-purple-400 text-sm sm:text-xl tracking-wider flex items-center gap-2 sm:gap-3">
+        <span class="animate-pulse text-cyan-400 text-base sm:text-xl">⚡</span> PRIME DUAL PORTAL
       </a>
 
-      <div class="flex items-center gap-4">
-        <button id="nav-toggler" class="md:hidden px-3 py-2 rounded-xl bg-cyan-500/20 border border-cyan-400/50 text-cyan-300 font-orbitron text-xs tracking-widest flex items-center gap-2 hover:bg-cyan-500/35 transition-all focus:outline-none">
+      <div class="flex items-center gap-3 relative">
+        <button id="nav-toggler" class="px-3.5 py-2 rounded-lg bg-cyan-500/20 border border-cyan-400/50 text-cyan-300 font-orbitron text-[11px] tracking-widest flex items-center gap-1.5 hover:bg-cyan-500/35 transition-all focus:outline-none">
           <span>MENU</span>
-          <svg class="w-4 h-4 transition-transform duration-300" id="toggler-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          <svg class="w-3.5 h-3.5 transition-transform duration-300" id="toggler-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
         </button>
 
-        <div id="nav-dual-buttons" class="hidden md:flex items-center gap-3 absolute md:relative top-full left-0 right-0 md:top-auto glass-panel md:glass-panel-none p-4 md:p-0 border-b md:border-none border-cyan-500/30 flex-col md:flex-row shadow-2xl transition-all duration-300">
-          <a href="calculator.html" class="w-full md:w-auto px-4 py-2.5 rounded-xl bg-purple-600/20 border border-purple-400/50 text-purple-300 font-orbitron text-xs tracking-widest hover:bg-purple-600/30 transition-all shadow-[0_0_15px_rgba(176,38,255,0.3)] text-center">
+        <!-- Dropdown Menu Box: Always vertical stacked layout with generous spacing -->
+        <div id="nav-dual-buttons" class="hidden flex items-stretch absolute top-[calc(100%+14px)] right-0 glass-panel p-4 border border-cyan-500/30 rounded-2xl shadow-2xl transition-all duration-300 min-w-[240px] flex-col gap-4">
+          <a href="calculator.html" class="w-full px-4 py-3 rounded-xl bg-purple-600/20 border border-purple-400/50 text-purple-300 font-orbitron text-[11px] tracking-widest hover:bg-purple-600/30 transition-all text-center">
             Prime Calculator
           </a>
-          <a href="https://prime-factor-app--rayaantasnim.replit.app/" class="w-full md:w-auto px-4 py-2.5 rounded-xl bg-cyan-500/20 border border-cyan-400/50 text-cyan-300 font-orbitron text-xs tracking-widest hover:bg-cyan-500/30 transition-all shadow-[0_0_15px_rgba(0,240,255,0.3)] text-center">
+          <a href="https://prime-factor-app--rayaantasnim.replit.app/" class="w-full px-4 py-3 rounded-xl bg-cyan-500/20 border border-cyan-400/50 text-cyan-300 font-orbitron text-[11px] tracking-widest hover:bg-cyan-500/30 transition-all text-center">
             Olympiad Arena
           </a>
         </div>
@@ -145,238 +169,229 @@
     </div>
   </nav>
 
-  <!-- Section 1: Hero Section with Cosmic Universe Background -->
-  <section class="min-h-screen flex flex-col items-center justify-center relative px-4 pt-32 pb-16">
-    <div class="glass-panel p-6 sm:p-12 md:p-16 rounded-[2.5rem] max-w-5xl text-center relative overflow-hidden border border-cyan-500/40">
-      <div class="absolute -right-32 -top-32 w-72 h-72 bg-cyan-500/20 rounded-full blur-[120px] pointer-events-none"></div>
-      <div class="absolute -left-32 -bottom-32 w-72 h-72 bg-purple-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+  <!-- Hero Section -->
+  <section class="min-h-screen flex flex-col items-center justify-center relative px-4 pt-28 pb-12">
+    <div class="glass-panel p-5 sm:p-10 md:p-16 rounded-[2rem] sm:rounded-[2.5rem] max-w-5xl text-center relative overflow-hidden border border-cyan-500/40">
+      <div class="absolute -right-24 -top-24 w-56 h-56 bg-cyan-500/20 rounded-full blur-[100px] pointer-events-none"></div>
+      <div class="absolute -left-24 -bottom-24 w-56 h-56 bg-purple-600/20 rounded-full blur-[100px] pointer-events-none"></div>
       
       <!-- Cosmic Visual Element -->
-      <div class="mb-8 rounded-2xl overflow-hidden border border-cyan-400/40 max-h-60 relative group shadow-2xl">
-        <img src="https://images.pexels.com/photos/2156881/pexels-photo-2156881.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Cosmic 3D Cloud Background" class="w-full h-48 md:h-56 object-cover opacity-80 group-hover:scale-105 transition-transform duration-700">
+      <div class="mb-6 rounded-xl overflow-hidden border border-cyan-400/40 max-h-48 sm:max-h-60 relative group shadow-2xl">
+        <img src="https://images.pexels.com/photos/2156881/pexels-photo-2156881.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Cosmic 3D Cloud Background" class="w-full h-40 sm:h-52 object-cover opacity-80 group-hover:scale-105 transition-transform duration-700">
         <div class="absolute inset-0 bg-gradient-to-t from-[#000208] via-transparent to-transparent"></div>
-        <span class="absolute bottom-3 left-1/2 -translate-x-1/2 py-1 px-4 sm:px-6 rounded-full bg-cyan-950/90 border border-cyan-400/50 text-cyan-300 text-[10px] sm:text-xs font-orbitron tracking-widest shadow-lg whitespace-nowrap">
+        <span class="absolute bottom-2.5 left-1/2 -translate-x-1/2 py-1 px-3 sm:px-6 rounded-full bg-cyan-950/90 border border-cyan-400/50 text-cyan-300 text-[9px] sm:text-xs font-orbitron tracking-widest shadow-lg whitespace-nowrap">
           ✦ THE UNIVERSE'S PREMIER DUAL MATHEMATICAL ECOSYSTEM ✦
         </span>
       </div>
 
-      <span class="inline-block py-1.5 px-5 rounded-full bg-cyan-500/15 border border-cyan-400/40 text-cyan-300 text-xs md:text-sm font-orbitron tracking-widest mb-6 shadow-[0_0_15px_rgba(0,240,255,0.2)]">
-        REVOLUTIONIZING ARITHMETIC MASTERY IN THE COSMIC VOID
+      <span class="inline-block py-1 px-4 rounded-full bg-cyan-500/15 border border-cyan-400/40 text-cyan-300 text-[11px] sm:text-sm font-orbitron tracking-widest mb-4 shadow-[0_0_15px_rgba(0,240,255,0.2)]">
+        REVOLUTIONIZING ARITHMETIC MASTERY
       </span>
 
-      <h1 class="text-3xl sm:text-5xl md:text-6xl font-black tracking-wider mb-6 leading-tight uppercase font-orbitron text-white">
+      <h1 class="text-2xl sm:text-4xl md:text-6xl font-black tracking-wider mb-4 sm:mb-6 leading-tight uppercase font-orbitron text-white">
         Conquer the Prime <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-teal-300 to-purple-400 neon-text-glow">Singularity</span>
       </h1>
 
-      <p class="text-lg sm:text-2xl max-w-3xl mx-auto mb-4 font-decorative tracking-wide text-cyan-200">
-        "Where elite competitive pressure meets instant computational precision across space-time."
+      <p class="text-base sm:text-xl max-w-3xl mx-auto mb-3 font-decorative tracking-wide text-cyan-200">
+        "Where elite competitive pressure meets instant computational precision."
       </p>
 
-      <p class="text-sm sm:text-lg text-gray-300 max-w-2xl mx-auto mb-10 font-medium leading-relaxed">
+      <p class="text-xs sm:text-base text-gray-300 max-w-2xl mx-auto mb-8 font-medium leading-relaxed">
         Experience the world's most sophisticated numerical landing platform combining high-stakes Math Olympiad testing with an unlimited septillion-scale prime factorization calculator.
       </p>
 
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
-        <a href="#dual-cards-container" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-400 via-teal-400 to-purple-600 text-black font-orbitron font-black text-xs sm:text-sm tracking-widest hover:scale-105 transition-all shadow-[0_0_35px_rgba(0,240,255,0.7)] text-center">
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5">
+        <a href="#dual-cards-container" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-400 via-teal-400 to-purple-600 text-black font-orbitron font-black text-xs tracking-widest hover:scale-105 transition-all shadow-[0_0_25px_rgba(0,240,255,0.7)] text-center">
           EXPLORE DUAL SECTIONS
         </a>
-        <a href="https://prime-factor-app--rayaantasnim.replit.app/" class="w-full sm:w-auto px-8 py-4 rounded-2xl glass-panel text-white font-orbitron font-bold text-xs sm:text-sm tracking-widest hover:bg-white/10 transition-all border border-purple-500/50 shadow-[0_0_35px_rgba(176,38,255,0.4)] text-center">
+        <a href="https://prime-factor-app--rayaantasnim.replit.app/" class="w-full sm:w-auto px-6 py-3.5 rounded-xl glass-panel text-white font-orbitron font-bold text-xs tracking-widest hover:bg-white/10 transition-all border border-purple-500/50 shadow-[0_0_25px_rgba(176,38,255,0.4)] text-center">
           LAUNCH OLYMPIAD ARENA
         </a>
       </div>
     </div>
   </section>
 
-  <!-- Horizontal Scroll Sections Wrapper: Dual Separated Carousels -->
+  <!-- Horizontal Scroll Sections Wrapper -->
   <section id="dual-cards-container" class="horizontal-section-wrapper h-screen flex items-center">
     <div class="horizontal-track" id="horizontal-track">
 
-      <!-- ========================================== -->
-      <!-- CAROUSEL 1: OLYMPIAD TEST (Cards 1 to 3)    -->
-      <!-- ========================================== -->
-
-      <!-- Horizontal Card 1: Primary Service - Elite Math Olympiad Test (Overview) -->
-      <div class="w-[88vw] sm:w-[620px] md:w-[650px] h-[75vh] glass-panel p-6 sm:p-10 md:p-12 rounded-[2.5rem] flex flex-col justify-between relative overflow-hidden border border-cyan-500/50 shadow-[0_0_50px_rgba(0,240,255,0.25)] shrink-0">
-        <div class="absolute -right-20 -top-20 w-60 h-60 bg-cyan-500/15 rounded-full blur-[80px] pointer-events-none"></div>
+      <!-- Card 1 -->
+      <div class="carousel-card w-[90vw] sm:w-[600px] md:w-[630px] h-[72vh] glass-panel p-5 sm:p-8 md:p-10 rounded-[2rem] sm:rounded-[2.5rem] flex flex-col justify-between relative overflow-hidden border border-cyan-500/50 shadow-[0_0_40px_rgba(0,240,255,0.2)] shrink-0">
+        <div class="absolute -right-16 -top-16 w-48 h-48 bg-cyan-500/15 rounded-full blur-[60px] pointer-events-none"></div>
         <div>
-          <div class="flex justify-between items-center mb-6">
-            <span class="py-1 px-3 sm:px-4 rounded-full bg-cyan-500/15 border border-cyan-400/50 text-cyan-300 text-[10px] sm:text-xs font-orbitron tracking-widest">
+          <div class="flex justify-between items-center mb-4 sm:mb-6">
+            <span class="py-1 px-3 rounded-full bg-cyan-500/15 border border-cyan-400/50 text-cyan-300 text-[10px] font-orbitron tracking-widest">
               ✦ CAROUSEL 1 : OLYMPIAD ARENA ✦
             </span>
-            <span class="font-orbitron text-cyan-300 text-xs sm:text-sm font-black">01 / 06</span>
+            <span class="font-orbitron text-cyan-300 text-xs font-black">01 / 06</span>
           </div>
-          <h2 class="text-xl sm:text-2xl md:text-3xl font-black font-orbitron mb-4 uppercase text-white leading-tight">
+          <h2 class="text-lg sm:text-2xl md:text-3xl font-black font-orbitron mb-3 uppercase text-white leading-tight">
             Elite Math <span class="text-cyan-300 neon-text-glow">Olympiad Testing</span>
           </h2>
-          <p class="text-gray-200 text-xs sm:text-sm md:text-base leading-relaxed mb-6 font-medium">
-            Designed explicitly for competitive math olympiad seekers. Test your capabilities solely on prime numbers through rigorous, professional-grade digital evaluation architectures.
+          <p class="text-gray-200 text-xs sm:text-sm leading-relaxed mb-4 font-medium">
+            Designed explicitly for competitive math olympiad seekers. Test your capabilities solely on prime numbers through professional-grade evaluation frameworks.
           </p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-            <div class="p-4 rounded-2xl bg-cyan-950/50 border border-cyan-500/30 shadow-inner">
-              <div class="text-cyan-300 font-orbitron text-xs font-bold mb-1">SCORING MATRIX</div>
-              <div class="text-gray-300 text-xs">+10 points correct, -2 points for wrong/skipped answers.</div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+            <div class="p-3 rounded-xl bg-cyan-950/50 border border-cyan-500/30 shadow-inner">
+              <div class="text-cyan-300 font-orbitron text-[10px] font-bold mb-1">SCORING MATRIX</div>
+              <div class="text-gray-300 text-[11px]">+10 correct, -2 wrong/skipped.</div>
             </div>
-            <div class="p-4 rounded-2xl bg-purple-950/50 border border-purple-500/30 shadow-inner">
-              <div class="text-purple-300 font-orbitron text-xs font-bold mb-1">DIFFICULTY RANGES</div>
-              <div class="text-gray-300 text-xs">6 customizable tiers to match your precise competitive level.</div>
+            <div class="p-3 rounded-xl bg-purple-950/50 border border-purple-500/30 shadow-inner">
+              <div class="text-purple-300 font-orbitron text-[10px] font-bold mb-1">DIFFICULTY TIERS</div>
+              <div class="text-gray-300 text-[11px]">6 customizable competitive levels.</div>
             </div>
           </div>
         </div>
-        <div class="flex items-center justify-between border-t border-cyan-500/30 pt-4">
-          <span class="text-[10px] sm:text-xs font-orbitron text-cyan-300 tracking-widest">SCROLL TO ADVANCE →</span>
-          <a href="https://prime-factor-app--rayaantasnim.replit.app/" class="px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl bg-cyan-400 text-black font-orbitron font-bold text-xs tracking-widest hover:bg-cyan-300 transition-all shadow-[0_0_20px_rgba(0,240,255,0.5)]">
+        <div class="flex items-center justify-between border-t border-cyan-500/30 pt-3">
+          <span class="text-[10px] font-orbitron text-cyan-300 tracking-widest">SCROLL TO ADVANCE →</span>
+          <a href="https://prime-factor-app--rayaantasnim.replit.app/" class="px-4 py-2 rounded-xl bg-cyan-400 text-black font-orbitron font-bold text-[11px] tracking-widest hover:bg-cyan-300 transition-all shadow-[0_0_15px_rgba(0,240,255,0.4)]">
             Launch Replit App
           </a>
         </div>
       </div>
 
-      <!-- Horizontal Card 2: Olympiad Features (Timer & Open Source Exams) -->
-      <div class="w-[88vw] sm:w-[620px] md:w-[650px] h-[75vh] glass-panel p-6 sm:p-10 md:p-12 rounded-[2.5rem] flex flex-col justify-between relative overflow-hidden border border-cyan-500/50 shadow-[0_0_50px_rgba(0,240,255,0.25)] shrink-0">
-        <div class="absolute -right-20 -bottom-20 w-60 h-60 bg-cyan-500/15 rounded-full blur-[80px] pointer-events-none"></div>
+      <!-- Card 2 -->
+      <div class="carousel-card w-[90vw] sm:w-[600px] md:w-[630px] h-[72vh] glass-panel p-5 sm:p-8 md:p-10 rounded-[2rem] sm:rounded-[2.5rem] flex flex-col justify-between relative overflow-hidden border border-cyan-500/50 shadow-[0_0_40px_rgba(0,240,255,0.2)] shrink-0">
+        <div class="absolute -right-16 -bottom-16 w-48 h-48 bg-cyan-500/15 rounded-full blur-[60px] pointer-events-none"></div>
         <div>
-          <div class="flex justify-between items-center mb-6">
-            <span class="py-1 px-3 sm:px-4 rounded-full bg-cyan-500/15 border border-cyan-400/50 text-cyan-300 text-[10px] sm:text-xs font-orbitron tracking-widest">
+          <div class="flex justify-between items-center mb-4 sm:mb-6">
+            <span class="py-1 px-3 rounded-full bg-cyan-500/15 border border-cyan-400/50 text-cyan-300 text-[10px] font-orbitron tracking-widest">
               ✦ CAROUSEL 1 : OLYMPIAD MECHANICS ✦
             </span>
-            <span class="font-orbitron text-cyan-300 text-xs sm:text-sm font-black">02 / 06</span>
+            <span class="font-orbitron text-cyan-300 text-xs font-black">02 / 06</span>
           </div>
-          <h2 class="text-xl sm:text-2xl md:text-3xl font-black font-orbitron mb-4 uppercase text-white leading-tight">
+          <h2 class="text-lg sm:text-2xl md:text-3xl font-black font-orbitron mb-3 uppercase text-white leading-tight">
             180 Seconds <span class="text-cyan-300 neon-text-glow">Pressure Test</span>
           </h2>
-          <p class="text-gray-200 text-xs sm:text-sm md:text-base leading-relaxed mb-6 font-medium">
-            Engage in unlimited open-source exams structured specifically to simulate live international competition constraints and razor-sharp mental agility.
+          <p class="text-gray-200 text-xs sm:text-sm leading-relaxed mb-4 font-medium">
+            Engage in unlimited open-source exams structured specifically to simulate live international competition constraints.
           </p>
-          <ul class="space-y-3 mb-6 text-xs sm:text-sm text-gray-200 font-medium">
-            <li class="flex items-center gap-3">⚡ <strong class="text-cyan-300 font-bold">8 High-Stakes Questions</strong> per test session</li>
-            <li class="flex items-center gap-3">⚡ <strong class="text-cyan-300 font-bold">Strict 180-Second Timer</strong> forcing rapid calculation</li>
-            <li class="flex items-center gap-3">⚡ <strong class="text-cyan-300 font-bold">Unlimited Free Practice</strong> across all available difficulty tiers</li>
+          <ul class="space-y-2.5 mb-4 text-xs text-gray-200 font-medium">
+            <li class="flex items-center gap-2">⚡ <strong class="text-cyan-300 font-bold">8 High-Stakes Questions</strong> per test session</li>
+            <li class="flex items-center gap-2">⚡ <strong class="text-cyan-300 font-bold">Strict 180-Second Timer</strong> forcing rapid mental agility</li>
+            <li class="flex items-center gap-2">⚡ <strong class="text-cyan-300 font-bold">Unlimited Free Practice</strong> across all difficulty tiers</li>
           </ul>
         </div>
-        <div class="flex items-center justify-between border-t border-cyan-500/30 pt-4">
-          <span class="text-[10px] sm:text-xs font-orbitron text-cyan-300 tracking-widest">SCROLL TO ADVANCE →</span>
-          <a href="https://prime-factor-app--rayaantasnim.replit.app/" class="px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl bg-gradient-to-r from-cyan-400 to-teal-500 text-black font-orbitron font-bold text-xs tracking-widest hover:scale-105 transition-all shadow-[0_0_25px_rgba(0,240,255,0.6)]">
+        <div class="flex items-center justify-between border-t border-cyan-500/30 pt-3">
+          <span class="text-[10px] font-orbitron text-cyan-300 tracking-widest">SCROLL TO ADVANCE →</span>
+          <a href="https://prime-factor-app--rayaantasnim.replit.app/" class="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-400 to-teal-500 text-black font-orbitron font-bold text-[11px] tracking-widest hover:scale-105 transition-all shadow-[0_0_20px_rgba(0,240,255,0.5)]">
             Start Olympiad Test
           </a>
         </div>
       </div>
 
-      <!-- Horizontal Card 3: Olympiad Error Review & Correct Answer Sheets -->
-      <div class="w-[88vw] sm:w-[620px] md:w-[650px] h-[75vh] glass-panel p-6 sm:p-10 md:p-12 rounded-[2.5rem] flex flex-col justify-between relative overflow-hidden border border-cyan-500/50 shadow-[0_0_50px_rgba(0,240,255,0.25)] shrink-0">
-        <div class="absolute -right-20 -bottom-20 w-60 h-60 bg-cyan-500/15 rounded-full blur-[80px] pointer-events-none"></div>
+      <!-- Card 3 -->
+      <div class="carousel-card w-[90vw] sm:w-[600px] md:w-[630px] h-[72vh] glass-panel p-5 sm:p-8 md:p-10 rounded-[2rem] sm:rounded-[2.5rem] flex flex-col justify-between relative overflow-hidden border border-cyan-500/50 shadow-[0_0_40px_rgba(0,240,255,0.2)] shrink-0">
+        <div class="absolute -right-16 -bottom-16 w-48 h-48 bg-cyan-500/15 rounded-full blur-[60px] pointer-events-none"></div>
         <div>
-          <div class="flex justify-between items-center mb-6">
-            <span class="py-1 px-3 sm:px-4 rounded-full bg-cyan-500/15 border border-cyan-400/50 text-cyan-300 text-[10px] sm:text-xs font-orbitron tracking-widest">
+          <div class="flex justify-between items-center mb-4 sm:mb-6">
+            <span class="py-1 px-3 rounded-full bg-cyan-500/15 border border-cyan-400/50 text-cyan-300 text-[10px] font-orbitron tracking-widest">
               ✦ CAROUSEL 1 : OLYMPIAD ANALYTICS ✦
             </span>
-            <span class="font-orbitron text-cyan-300 text-xs sm:text-sm font-black">03 / 06</span>
+            <span class="font-orbitron text-cyan-300 text-xs font-black">03 / 06</span>
           </div>
-          <h2 class="text-xl sm:text-2xl md:text-3xl font-black font-orbitron mb-4 uppercase text-white leading-tight">
+          <h2 class="text-lg sm:text-2xl md:text-3xl font-black font-orbitron mb-3 uppercase text-white leading-tight">
             Comprehensive <span class="text-cyan-300 neon-text-glow">Answer Sheets</span>
           </h2>
-          <p class="text-gray-200 text-xs sm:text-sm md:text-base leading-relaxed mb-6 font-medium">
-            Never wonder where you went wrong. The platform generates detailed correct answer sheets for every missed question, ensuring continuous cognitive growth.
+          <p class="text-gray-200 text-xs sm:text-sm leading-relaxed mb-4 font-medium">
+            Detailed correct answer sheets generated for every missed question to ensure continuous cognitive growth and pattern mastery.
           </p>
-          <div class="p-5 rounded-2xl bg-cyan-950/50 border border-cyan-500/30 mb-6 shadow-inner">
-            <div class="text-cyan-300 font-orbitron text-xs font-bold mb-1">TARGETED IMPROVEMENT</div>
-            <div class="text-gray-300 text-xs">Review skipped or incorrect breakdowns instantly to master prime number patterns permanently.</div>
+          <div class="p-4 rounded-xl bg-cyan-950/50 border border-cyan-500/30 mb-4 shadow-inner">
+            <div class="text-cyan-300 font-orbitron text-[10px] font-bold mb-1">TARGETED IMPROVEMENT</div>
+            <div class="text-gray-300 text-[11px]">Review skipped or incorrect breakdowns instantly.</div>
           </div>
         </div>
-        <div class="flex items-center justify-between border-t border-cyan-500/30 pt-4">
-          <span class="text-[10px] sm:text-xs font-orbitron text-cyan-300 tracking-widest">SCROLL TO ADVANCE →</span>
-          <a href="https://prime-factor-app--rayaantasnim.replit.app/" class="px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl bg-cyan-400 text-black font-orbitron font-bold text-xs tracking-widest hover:bg-cyan-300 transition-all shadow-[0_0_20px_rgba(0,240,255,0.5)]">
+        <div class="flex items-center justify-between border-t border-cyan-500/30 pt-3">
+          <span class="text-[10px] font-orbitron text-cyan-300 tracking-widest">SCROLL TO ADVANCE →</span>
+          <a href="https://prime-factor-app--rayaantasnim.replit.app/" class="px-4 py-2 rounded-xl bg-cyan-400 text-black font-orbitron font-bold text-[11px] tracking-widest hover:bg-cyan-300 transition-all shadow-[0_0_15px_rgba(0,240,255,0.4)]">
             Test Your Skills
           </a>
         </div>
       </div>
 
-
-      <!-- ========================================== -->
-      <!-- CAROUSEL 2: CALCULATOR (Cards 4 to 6)     -->
-      <!-- ========================================== -->
-
-      <!-- Horizontal Card 4: Secondary Service - Prime Number Calculator (Overview & Scale) -->
-      <div class="w-[88vw] sm:w-[620px] md:w-[650px] h-[75vh] glass-panel-purple p-6 sm:p-10 md:p-12 rounded-[2.5rem] flex flex-col justify-between relative overflow-hidden border border-purple-500/50 shadow-[0_0_50px_rgba(176,38,255,0.25)] shrink-0">
-        <div class="absolute -left-20 -top-20 w-60 h-60 bg-purple-600/20 rounded-full blur-[80px] pointer-events-none"></div>
+      <!-- Card 4 -->
+      <div class="carousel-card w-[90vw] sm:w-[600px] md:w-[630px] h-[72vh] glass-panel-purple p-5 sm:p-8 md:p-10 rounded-[2rem] sm:rounded-[2.5rem] flex flex-col justify-between relative overflow-hidden border border-purple-500/50 shadow-[0_0_40px_rgba(176,38,255,0.2)] shrink-0">
+        <div class="absolute -left-16 -top-16 w-48 h-48 bg-purple-600/20 rounded-full blur-[60px] pointer-events-none"></div>
         <div>
-          <div class="flex justify-between items-center mb-6">
-            <span class="py-1 px-3 sm:px-4 rounded-full bg-purple-500/20 border border-purple-400/50 text-purple-300 text-[10px] sm:text-xs font-orbitron tracking-widest">
+          <div class="flex justify-between items-center mb-4 sm:mb-6">
+            <span class="py-1 px-3 rounded-full bg-purple-500/20 border border-purple-400/50 text-purple-300 text-[10px] font-orbitron tracking-widest">
               ✦ CAROUSEL 2 : CALCULATOR ENGINE ✦
             </span>
-            <span class="font-orbitron text-purple-300 text-xs sm:text-sm font-black">04 / 06</span>
+            <span class="font-orbitron text-purple-300 text-xs font-black">04 / 06</span>
           </div>
-          <h2 class="text-xl sm:text-2xl md:text-3xl font-black font-orbitron mb-4 uppercase text-white leading-tight">
+          <h2 class="text-lg sm:text-2xl md:text-3xl font-black font-orbitron mb-3 uppercase text-white leading-tight">
             Prime Number <span class="text-purple-300 neon-purple-glow">Decomposition</span>
           </h2>
-          <p class="text-gray-200 text-xs sm:text-sm md:text-base leading-relaxed mb-6 font-medium">
-            The second core option in our menu. Enter any massive integer and watch the system instantly break it down into its constituent prime factors with total precision.
+          <p class="text-gray-200 text-xs sm:text-sm leading-relaxed mb-4 font-medium">
+            Enter any massive integer and watch the system instantly break it down into constituent prime factors with precision.
           </p>
-          <div class="p-5 rounded-2xl bg-purple-950/50 border border-purple-500/30 mb-6 shadow-inner">
-            <div class="text-purple-300 font-orbitron text-xs font-bold mb-1">INSTANT COMPUTATIONAL ENGINE</div>
-            <div class="text-gray-300 text-xs">Lightning-fast factorization pipeline built for absolute numerical clarity.</div>
+          <div class="p-4 rounded-xl bg-purple-950/50 border border-purple-500/30 mb-4 shadow-inner">
+            <div class="text-purple-300 font-orbitron text-[10px] font-bold mb-1">INSTANT COMPUTATION</div>
+            <div class="text-gray-300 text-[11px]">Lightning-fast factorization pipeline for absolute numerical clarity.</div>
           </div>
         </div>
-        <div class="flex items-center justify-between border-t border-purple-500/30 pt-4">
-          <span class="text-[10px] sm:text-xs font-orbitron text-purple-300 tracking-widest">SCROLL TO ADVANCE →</span>
-          <a href="calculator.html" class="px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl bg-purple-500 text-white font-orbitron font-bold text-xs tracking-widest hover:bg-purple-400 transition-all shadow-[0_0_20px_rgba(176,38,255,0.5)]">
+        <div class="flex items-center justify-between border-t border-purple-500/30 pt-3">
+          <span class="text-[10px] font-orbitron text-purple-300 tracking-widest">SCROLL TO ADVANCE →</span>
+          <a href="calculator.html" class="px-4 py-2 rounded-xl bg-purple-500 text-white font-orbitron font-bold text-[11px] tracking-widest hover:bg-purple-400 transition-all shadow-[0_0_15px_rgba(176,38,255,0.4)]">
             Open Calculator
           </a>
         </div>
       </div>
 
-      <!-- Horizontal Card 5: Calculator Capacity - Septillions & Unlimited Usage -->
-      <div class="w-[88vw] sm:w-[620px] md:w-[650px] h-[75vh] glass-panel-purple p-6 sm:p-10 md:p-12 rounded-[2.5rem] flex flex-col justify-between relative overflow-hidden border border-purple-500/50 shadow-[0_0_50px_rgba(176,38,255,0.25)] shrink-0">
-        <div class="absolute -left-20 -top-20 w-60 h-60 bg-purple-600/20 rounded-full blur-[80px] pointer-events-none"></div>
+      <!-- Card 5 -->
+      <div class="carousel-card w-[90vw] sm:w-[600px] md:w-[630px] h-[72vh] glass-panel-purple p-5 sm:p-8 md:p-10 rounded-[2rem] sm:rounded-[2.5rem] flex flex-col justify-between relative overflow-hidden border border-purple-500/50 shadow-[0_0_40px_rgba(176,38,255,0.2)] shrink-0">
+        <div class="absolute -left-16 -top-16 w-48 h-48 bg-purple-600/20 rounded-full blur-[60px] pointer-events-none"></div>
         <div>
-          <div class="flex justify-between items-center mb-6">
-            <span class="py-1 px-3 sm:px-4 rounded-full bg-purple-500/20 border border-purple-400/50 text-purple-300 text-[10px] sm:text-xs font-orbitron tracking-widest">
+          <div class="flex justify-between items-center mb-4 sm:mb-6">
+            <span class="py-1 px-3 rounded-full bg-purple-500/20 border border-purple-400/50 text-purple-300 text-[10px] font-orbitron tracking-widest">
               ✦ CAROUSEL 2 : SEPTILLION SCALE ✦
             </span>
-            <span class="font-orbitron text-purple-300 text-xs sm:text-sm font-black">05 / 06</span>
+            <span class="font-orbitron text-purple-300 text-xs font-black">05 / 06</span>
           </div>
-          <h2 class="text-xl sm:text-2xl md:text-3xl font-black font-orbitron mb-4 uppercase text-white leading-tight">
+          <h2 class="text-lg sm:text-2xl md:text-3xl font-black font-orbitron mb-3 uppercase text-white leading-tight">
             Up to <span class="text-purple-300 neon-purple-glow">Septillions</span> Scale
           </h2>
-          <p class="text-gray-200 text-xs sm:text-sm md:text-base leading-relaxed mb-6 font-medium">
-            Process astronomical integers effortlessly. Our calculator handles colossal scales up to septillions while offering 100% unlimited free usage for all users.
+          <p class="text-gray-200 text-xs sm:text-sm leading-relaxed mb-4 font-medium">
+            Process astronomical integers effortlessly. Handles colossal scales up to septillions with 100% unlimited free usage.
           </p>
-          <ul class="space-y-3 mb-6 text-xs sm:text-sm text-gray-200 font-medium">
-            <li class="flex items-center gap-2">✦ <strong class="text-purple-300 font-bold">Septillion-Scale Numbers</strong> fully supported</li>
+          <ul class="space-y-2.5 mb-4 text-xs text-gray-200 font-medium">
+            <li class="flex items-center gap-2">✦ <strong class="text-purple-300 font-bold">Septillion-Scale Numbers</strong> supported</li>
             <li class="flex items-center gap-2">✦ <strong class="text-purple-300 font-bold">Unlimited Free Usage</strong> with zero restrictions</li>
-            <li class="flex items-center gap-2">✦ <strong class="text-purple-300 font-bold">Exponential Breakdown</strong> view for prime components</li>
+            <li class="flex items-center gap-2">✦ <strong class="text-purple-300 font-bold">Exponential Breakdown</strong> view for components</li>
           </ul>
         </div>
-        <div class="flex items-center justify-between border-t border-purple-500/30 pt-4">
-          <span class="text-[10px] sm:text-xs font-orbitron text-purple-300 tracking-widest">SCROLL TO ADVANCE →</span>
-          <a href="calculator.html" class="px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl bg-gradient-to-r from-purple-500 to-pink-600 text-white font-orbitron font-bold text-xs tracking-widest hover:scale-105 transition-all shadow-[0_0_25px_rgba(176,38,255,0.6)]">
+        <div class="flex items-center justify-between border-t border-purple-500/30 pt-3">
+          <span class="text-[10px] font-orbitron text-purple-300 tracking-widest">SCROLL TO ADVANCE →</span>
+          <a href="calculator.html" class="px-4 py-2 rounded-xl bg-gradient-to-r from-purple-500 to-pink-600 text-white font-orbitron font-bold text-[11px] tracking-widest hover:scale-105 transition-all shadow-[0_0_20px_rgba(176,38,255,0.5)]">
             Try Calculator Now
           </a>
         </div>
       </div>
 
-      <!-- Horizontal Card 6: Ultimate Synergy & Authorship -->
-      <div class="w-[88vw] sm:w-[620px] md:w-[650px] h-[75vh] glass-panel-purple p-6 sm:p-10 md:p-12 rounded-[2.5rem] flex flex-col justify-between relative overflow-hidden border border-pink-500/50 shadow-[0_0_50px_rgba(255,0,127,0.25)] shrink-0">
-        <div class="absolute -right-20 -bottom-20 w-60 h-60 bg-pink-600/20 rounded-full blur-[80px] pointer-events-none"></div>
+      <!-- Card 6 -->
+      <div class="carousel-card w-[90vw] sm:w-[600px] md:w-[630px] h-[72vh] glass-panel-purple p-5 sm:p-8 md:p-10 rounded-[2rem] sm:rounded-[2.5rem] flex flex-col justify-between relative overflow-hidden border border-pink-500/50 shadow-[0_0_40px_rgba(255,0,127,0.2)] shrink-0">
+        <div class="absolute -right-16 -bottom-16 w-48 h-48 bg-pink-600/20 rounded-full blur-[60px] pointer-events-none"></div>
         <div>
-          <div class="flex justify-between items-center mb-6">
-            <span class="py-1 px-3 sm:px-4 rounded-full bg-pink-500/20 border border-pink-400/50 text-pink-300 text-[10px] sm:text-xs font-orbitron tracking-widest">
+          <div class="flex justify-between items-center mb-4 sm:mb-6">
+            <span class="py-1 px-3 rounded-full bg-pink-500/20 border border-pink-400/50 text-pink-300 text-[10px] font-orbitron tracking-widest">
               ✦ CAROUSEL 2 : PORTAL SYNERGY ✦
             </span>
-            <span class="font-orbitron text-pink-300 text-xs sm:text-sm font-black">06 / 06</span>
+            <span class="font-orbitron text-pink-300 text-xs font-black">06 / 06</span>
           </div>
-          <h2 class="text-xl sm:text-2xl md:text-3xl font-black font-orbitron mb-4 uppercase text-white leading-tight">
+          <h2 class="text-lg sm:text-2xl md:text-3xl font-black font-orbitron mb-3 uppercase text-white leading-tight">
             The World's Best <span class="text-pink-300 neon-purple-glow">Math Portal</span>
           </h2>
-          <p class="text-gray-200 text-xs sm:text-sm md:text-base leading-relaxed mb-6 font-medium">
-            Authored by Rayaan Tasnim, this dual-service landing page merges elite Olympiad competition testing with infinite computational power into a single cosmic ecosystem.
+          <p class="text-gray-200 text-xs sm:text-sm leading-relaxed mb-4 font-medium">
+            Authored by Rayaan Tasnim, merging elite Olympiad competition testing with infinite computational power into a unified ecosystem.
           </p>
-          <div class="p-5 rounded-2xl bg-pink-950/50 border border-pink-500/30 mb-6 shadow-inner">
-            <div class="text-pink-300 font-orbitron text-xs font-bold mb-1">ABSOLUTE NUMERICAL DOMINANCE</div>
-            <div class="text-gray-300 text-xs">Switch seamlessly between competitive exam training and massive integer factorization.</div>
+          <div class="p-4 rounded-xl bg-pink-950/50 border border-pink-500/30 mb-4 shadow-inner">
+            <div class="text-pink-300 font-orbitron text-[10px] font-bold mb-1">NUMERICAL DOMINANCE</div>
+            <div class="text-gray-300 text-[11px]">Switch seamlessly between exam training and massive factorization.</div>
           </div>
         </div>
-        <div class="flex items-center justify-between border-t border-pink-500/30 pt-4">
-          <span class="text-[10px] sm:text-xs font-orbitron text-pink-300 tracking-widest">END OF DUAL CAROUSELS</span>
-          <a href="https://prime-factor-app--rayaantasnim.replit.app/" class="px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl bg-pink-600 text-white font-orbitron font-bold text-xs tracking-widest hover:bg-pink-500 transition-all shadow-[0_0_20px_rgba(255,0,127,0.5)]">
+        <div class="flex items-center justify-between border-t border-pink-500/30 pt-3">
+          <span class="text-[10px] font-orbitron text-pink-300 tracking-widest">END OF CAROUSELS</span>
+          <a href="https://prime-factor-app--rayaantasnim.replit.app/" class="px-4 py-2 rounded-xl bg-pink-600 text-white font-orbitron font-bold text-[11px] tracking-widest hover:bg-pink-500 transition-all shadow-[0_0_15px_rgba(255,0,127,0.4)]">
             Launch Platform
           </a>
         </div>
@@ -385,40 +400,40 @@
     </div>
   </section>
 
-  <!-- Section: Final Recommendation / Call to Action -->
-  <section class="py-24 px-4 relative max-w-4xl mx-auto text-center">
-    <div class="glass-panel p-8 sm:p-12 md:p-16 rounded-[2.5rem] border border-cyan-500/40 shadow-2xl relative overflow-hidden">
+  <!-- CTA Section -->
+  <section class="py-16 sm:py-24 px-4 relative max-w-4xl mx-auto text-center">
+    <div class="glass-panel p-6 sm:p-12 md:p-16 rounded-[2rem] sm:rounded-[2.5rem] border border-cyan-500/40 shadow-2xl relative overflow-hidden">
       <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-600/10 to-transparent pointer-events-none"></div>
       
-      <span class="text-cyan-300 font-orbitron text-xs tracking-widest uppercase mb-4 block">Universal Supremacy</span>
-      <h2 class="text-2xl sm:text-3xl md:text-4xl font-black font-orbitron mb-6 uppercase text-white">Master Your Mathematical Destiny</h2>
+      <span class="text-cyan-300 font-orbitron text-xs tracking-widest uppercase mb-3 block">Universal Supremacy</span>
+      <h2 class="text-xl sm:text-3xl md:text-4xl font-black font-orbitron mb-4 sm:mb-6 uppercase text-white">Master Your Mathematical Destiny</h2>
       
-      <p class="text-gray-200 text-base sm:text-xl font-medium leading-relaxed max-w-2xl mx-auto mb-10">
-        Choose your path: conquer the 3-minute Olympiad test arena or calculate prime factors up to septillions instantly with zero limits.
+      <p class="text-gray-200 text-sm sm:text-lg font-medium leading-relaxed max-w-2xl mx-auto mb-8">
+        Choose your path: conquer the 3-minute Olympiad test arena or calculate prime factors up to septillions instantly.
       </p>
 
-      <div class="flex flex-wrap justify-center gap-4">
-        <a href="https://prime-factor-app--rayaantasnim.replit.app/" class="px-8 py-4 rounded-xl bg-cyan-400 text-black font-orbitron font-bold text-xs sm:text-sm tracking-widest hover:bg-cyan-300 transition-all shadow-[0_0_25px_rgba(0,240,255,0.6)] text-center">
+      <div class="flex flex-col sm:flex-row justify-center gap-3.5">
+        <a href="https://prime-factor-app--rayaantasnim.replit.app/" class="px-6 py-3.5 rounded-xl bg-cyan-400 text-black font-orbitron font-bold text-xs tracking-widest hover:bg-cyan-300 transition-all shadow-[0_0_20px_rgba(0,240,255,0.5)] text-center">
           Launch Olympiad Test Arena
         </a>
-        <a href="calculator.html" class="px-8 py-4 rounded-xl bg-purple-600 text-white font-orbitron font-bold text-xs sm:text-sm tracking-widest hover:bg-purple-500 transition-all shadow-[0_0_25px_rgba(176,38,255,0.6)] text-center">
+        <a href="calculator.html" class="px-6 py-3.5 rounded-xl bg-purple-600 text-white font-orbitron font-bold text-xs tracking-widest hover:bg-purple-500 transition-all shadow-[0_0_20px_rgba(176,38,255,0.5)] text-center">
           Launch Calculator Portal
         </a>
       </div>
     </div>
   </section>
 
-  <!-- Section: Footer with Copyright and Authorship Credit -->
-  <footer class="py-16 px-4 text-center border-t border-cyan-900/50 bg-[#000104]/80 relative z-10">
-    <p class="text-cyan-300 text-xs sm:text-sm font-orbitron tracking-widest mb-3">
+  <!-- Footer -->
+  <footer class="py-12 px-4 text-center border-t border-cyan-900/50 bg-[#000104]/80 relative z-10">
+    <p class="text-cyan-300 text-xs sm:text-sm font-orbitron tracking-widest mb-2">
       PORTAL AUTHORED BY <a href="https://rayaantasnim.github.io/Rayaan-Tasnim/" target="_blank" class="text-cyan-200 underline hover:text-cyan-400 font-bold transition-colors">Rayaan Tasnim</a>
     </p>
-    <p class="text-gray-400 text-xs font-light">© 2026 Rayaan Tasnim — All Rights Reserved</p>
+    <p class="text-gray-400 text-[11px] font-light">© 2026 Rayaan Tasnim — All Rights Reserved</p>
   </footer>
 
   <!-- Scripts -->
   <script>
-    // Navbar Toggler Functionality for Mobile
+    // Navbar Toggler
     const navToggler = document.getElementById('nav-toggler');
     const navDualButtons = document.getElementById('nav-dual-buttons');
     const togglerIcon = document.getElementById('toggler-icon');
@@ -428,38 +443,43 @@
       togglerIcon.classList.toggle('rotate-180');
     });
 
-    // GSAP ScrollTrigger Horizontal Scrolling Implementation
+    // GSAP ScrollTrigger Responsive Setup
     gsap.registerPlugin(ScrollTrigger);
 
     const track = document.getElementById("horizontal-track");
     
-    // Calculate total horizontal scroll width dynamically
     let getScrollAmount = () => -(track.scrollWidth - window.innerWidth);
 
-    const tween = gsap.to(track, {
-      x: getScrollAmount,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".horizontal-section-wrapper",
-        start: "top top",
-        end: () => `+=${track.scrollWidth - window.innerWidth}`,
-        pin: true,
-        scrub: 1,
-        invalidateOnRefresh: true,
-        anticipatePin: 1
+    let tween;
+    function setupScrollTrigger() {
+      if (window.innerWidth > 768) {
+        tween = gsap.to(track, {
+          x: getScrollAmount,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".horizontal-section-wrapper",
+            start: "top top",
+            end: () => `+=${track.scrollWidth - window.innerWidth}`,
+            pin: true,
+            scrub: 1,
+            invalidateOnRefresh: true,
+            anticipatePin: 1
+          }
+        });
       }
-    });
+    }
+    setupScrollTrigger();
 
-    // Three.js Interactive 3D Cosmic Universe Background with Cursor Movement
+    // Three.js Interactive Background
     const container = document.getElementById('canvas-container');
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    const renderer = new THREE.WebGLRenderer({ alpha: titleAlpha = true, antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    const particleCount = 2500;
+    const particleCount = window.innerWidth < 768 ? 1000 : 2500;
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
 
@@ -479,7 +499,6 @@
     scene.add(particles);
     camera.position.z = 8;
 
-    // Interactive Cursor Tracking
     let mouseX = 0, mouseY = 0;
     let targetX = 0, targetY = 0;
 
@@ -493,7 +512,6 @@
       requestAnimationFrame(animate);
       const elapsedTime = clock.getElapsedTime();
 
-      // Smooth interpolation for cursor rotation
       targetX += (mouseX - targetX) * 0.05;
       targetY += (mouseY - targetY) * 0.05;
 

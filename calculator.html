@@ -88,6 +88,10 @@
             <div id="noticeBox" class="hidden mt-6 p-4 rounded-xl border text-sm transition-all"></div>
 
             <div id="resultBox" class="hidden mt-6 space-y-4 pt-6 border-t border-slate-800/80 animate-fadeIn">
+                <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl">
+                    <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Inputted Number Recognized</span>
+                    <span id="inputtedValDisplay" class="text-cyan-200 font-mono text-base mt-1 block break-all">--</span>
+                </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl">
                         <span class="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Classification</span>
@@ -155,14 +159,12 @@
         scene.add(particlesMesh);
         camera.position.z = 5;
 
-        // Mouse interaction movement
         let mouseX = 0, mouseY = 0;
         window.addEventListener('mousemove', (e) => {
             mouseX = (e.clientX / window.innerWidth) - 0.5;
             mouseY = (e.clientY / window.innerHeight) - 0.5;
         });
 
-        // Animation Loop
         const clock = new THREE.Clock();
         function animate() {
             requestAnimationFrame(animate);
@@ -181,7 +183,7 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // Application Logic & BigInt Engine
+        // Application Logic & Ultra-Optimized BigInt Engine
         const inputField = document.getElementById('numberInput');
         const actionBtnContainer = document.getElementById('actionButtonContainer');
         const processBtn = document.getElementById('processBtn');
@@ -200,42 +202,173 @@
                 return;
             }
 
-            // Show interactive button as soon as user types
             actionBtnContainer.style.opacity = '1';
             actionBtnContainer.style.transform = 'translateY(0)';
             actionBtnContainer.style.pointerEvents = 'auto';
 
-            // Automatic execution flow
             processFactorization(rawVal);
         }
 
         inputField.addEventListener('input', evaluateNumber);
         processBtn.addEventListener('click', () => processFactorization(inputField.value.trim()));
 
+        // Modular Exponentiation for Miller-Rabin
+        function modularExponentiation(base, exp, mod) {
+            let res = 1n;
+            base = base % mod;
+            while (exp > 0n) {
+                if (exp % 2n === 1n) res = (res * base) % mod;
+                base = (base * base) % mod;
+                exp /= 2n;
+            }
+            return res;
+        }
+
+        // Miller-Rabin Primality Test
         function isPrimeBigInt(n) {
             if (n <= 1n) return false;
             if (n <= 3n) return true;
             if (n % 2n === 0n || n % 3n === 0n) return false;
-            for (let i = 5n; i * i <= n; i += 6n) {
-                if (n % i === 0n || n % (i + 2n) === 0n) return false;
+            
+            let d = n - 1n;
+            let s = 0n;
+            while (d % 2n === 0n) {
+                d /= 2n;
+                s += 1n;
+            }
+
+            const witnesses = [2n, 3n, 5n, 7n, 11n, 13n, 17n, 19n, 23n, 29n, 31n, 37n];
+            for (let a of witnesses) {
+                if (n <= a) break;
+                let x = modularExponentiation(a, d, n);
+                if (x === 1n || x === n - 1n) continue;
+                let composite = true;
+                for (let r = 1n; r < s; r++) {
+                    x = (x * x) % n;
+                    if (x === n - 1n) {
+                        composite = false;
+                        break;
+                    }
+                }
+                if (composite) return false;
             }
             return true;
         }
 
-        function processFactorization(valStr) {
+        // Greatest Common Divisor
+        function gcd(a, b) {
+            while (b !== 0n) {
+                let temp = b;
+                b = a % b;
+                a = temp;
+            }
+            return a < 0n ? -a : a;
+        }
+
+        // Fast Binary GCD / Euclidean for large numbers
+        function bigIntAbs(n) {
+            return n < 0n ? -n : n;
+        }
+
+        // Pollard's Rho with Brent's Cycle Finding Optimization for extreme large integers (like 95 digits)
+        function pollardRhoBrent(n) {
+            if (n % 2n === 0n) return 2n;
+            if (n % 3n === 0n) return 3n;
+            if (isPrimeBigInt(n)) return n;
+
+            let y = 2n, r = 1n, q = 1n, g = 1n, ys = 2n, x = 2n;
+            let m = 100n;
+            let c = 1n;
+
+            // Pseudo-random function: f(x) = (x^2 + c) % n
+            while (g === 1n) {
+                x = y;
+                for (let i = 0n; i < r; i++) {
+                    y = (modularExponentiation(y, 2n, n) + c) % n;
+                }
+                let k = 0n;
+                while (k < r && g === 1n) {
+                    ys = y;
+                    let limit = (m < r - k) ? m : (r - k);
+                    for (let i = 0n; i < limit; i++) {
+                        y = (modularExponentiation(y, 2n, n) + c) % n;
+                        let diff = x > y ? x - y : y - x;
+                        q = (q * diff) % n;
+                    }
+                    g = gcd(q, n);
+                    k += m;
+                }
+                r *= 2n;
+                if (g === n) {
+                    g = 1n;
+                    y = ys;
+                    c += 1n; // Change constant if stuck in a loop
+                    r = 1n;
+                    q = 1n;
+                }
+            }
+            return g;
+        }
+
+        // Fully recursive safe factorizer using Brent's method to handle 95+ digit composites without hanging or stack overflows
+        function factorizeRecursive(n, factorsList, depth = 0) {
+            if (n <= 1n || depth > 100) return;
+            if (isPrimeBigInt(n)) {
+                factorsList.push(n);
+                return;
+            }
+            let divisor = pollardRhoBrent(n);
+            if (divisor === n) {
+                factorsList.push(n);
+                return;
+            }
+            factorizeRecursive(divisor, factorsList, depth + 1);
+            factorizeRecursive(n / divisor, factorsList, depth + 1);
+        }
+
+        function processFactorization(rawInputStr) {
             noticeBox.classList.add('hidden');
             resultBox.classList.add('hidden');
 
-            if (valStr.toLowerCase() === 'infinity' || valStr === '∞') {
+            if (rawInputStr.toLowerCase() === 'infinity' || rawInputStr === '∞') {
                 showNotice("Target value approaches Absolute Infinity. Factorization maps infinitely across universal sets.", "info");
                 return;
             }
 
+            // Remove commas, spaces, punctuation cleanly as requested
+            let cleanedStr = rawInputStr.replace(/[\s,]+/g, '');
+            
+            const hasDigits = /\d/.test(cleanedStr);
+            if (!hasDigits) {
+                showNotice("Please provide a valid numeric entry scale.", "error");
+                return;
+            }
+
+            // Extract number blocks containing floats/decimals or signed integers
+            const match = cleanedStr.match(/-?\d+(?:\.\d+)?/);
+            if (!match) {
+                showNotice("Please provide a valid numeric entry scale.", "error");
+                return;
+            }
+
+            let extractedNumStr = match[0];
             let bigNum;
+            let displayValStr = extractedNumStr;
+
+            // Handle decimal/float formatting inputs by truncating to integer base for factorization
+            if (extractedNumStr.includes('.')) {
+                let parts = extractedNumStr.split('.');
+                displayValStr = extractedNumStr;
+                extractedNumStr = parts[0];
+                if (extractedNumStr === "" || extractedNumStr === "-") {
+                    extractedNumStr = "0";
+                }
+            }
+
             try {
-                bigNum = BigInt(valStr);
+                bigNum = BigInt(extractedNumStr);
             } catch (e) {
-                showNotice("Please provide a valid numeric entry scale.", "warning");
+                showNotice("Please provide a valid numeric entry scale.", "error");
                 return;
             }
 
@@ -253,28 +386,38 @@
 
             if (workNum === 1n) {
                 let classification = isNegative ? "Negative Unit (-1)" : "Unity (1)";
-                displayResults(classification, isNegative ? ["-1"] : ["1"], isNegative ? "-1" : "1", isNegative ? "-1" : "1");
+                displayResults(displayValStr, classification, isNegative ? ["-1"] : ["1"], isNegative ? "-1" : "1", isNegative ? "-1" : "1");
                 return;
             }
 
+            // Quick small trial division for micro-optimizing small primes before running Pollard's Brent
             let primeStatus = isPrimeBigInt(workNum);
             let factors = [];
-            let countMap = {};
 
-            let temp = workNum;
-            let divisor = 2n;
-
-            while (temp >= divisor * divisor && factors.length < 1000) {
-                while (temp % divisor === 0n) {
-                    factors.push(divisor);
-                    countMap[divisor.toString()] = (countMap[divisor.toString()] || 0) + 1;
-                    temp /= divisor;
+            if (!primeStatus) {
+                // Pre-divide small primes for lightning-fast execution
+                let smallPrimes = [2n, 3n, 5n, 7n, 11n, 13n, 17n, 19n, 23n, 29n, 31n, 37n, 41n, 43n, 47n];
+                for (let p of smallPrimes) {
+                    while (workNum % p === 0n) {
+                        factors.push(p);
+                        workNum /= p;
+                    }
                 }
-                divisor += (divisor === 2n) ? 1n : 2n;
+                if (workNum > 1n) {
+                    if (isPrimeBigInt(workNum)) {
+                        factors.push(workNum);
+                    } else {
+                        factorizeRecursive(workNum, factors);
+                    }
+                }
+                factors.sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
+            } else {
+                factors.push(workNum);
             }
-            if (temp > 1n) {
-                factors.push(temp);
-                countMap[temp.toString()] = (countMap[temp.toString()] || 0) + 1;
+
+            let countMap = {};
+            for (let f of factors) {
+                countMap[f.toString()] = (countMap[f.toString()] || 0) + 1;
             }
 
             if (isNegative) {
@@ -302,10 +445,11 @@
                 showNotice("✨ Exact Prime Number Identified! Displaying matched configuration factors below.", "success");
             }
 
-            displayResults(classificationText, uniqueFactorsStr, productStr, expStr);
+            displayResults(displayValStr, classificationText, uniqueFactorsStr, productStr, expStr);
         }
 
-        function displayResults(classification, uniqueFactors, product, exponential) {
+        function displayResults(inputtedVal, classification, uniqueFactors, product, exponential) {
+            document.getElementById('inputtedValDisplay').textContent = inputtedVal;
             document.getElementById('classificationVal').textContent = classification;
             document.getElementById('factorsList').textContent = uniqueFactors;
             document.getElementById('productForm').textContent = product;

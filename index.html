@@ -1,104 +1,246 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="5;url=https://prime-factor-app--rayaantasnim.replit.app/">
+  <meta http-equiv="refresh" content="10;url=https://prime-factor-app--rayaantasnim.replit.app/">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Prime Factor — A cosmic gateway to boost arithmetic power through prime factorization mastery. Powered by IDAI Universe.">
-<meta name="keywords" content="Prime Factor, Arithmetic, Prime Factorization, Math Olympiad, IDAI Universe, Cosmic Learning">
-<meta name="author" content="Rayaan Tasnim">
-  <title>Prime Factor Determination</title>
-  
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Tailwind -->
+  <meta name="description" content="The only site in the universe featuring tests based exclusively on prime factorizations. Designed for math Olympiad seekers.">
+  <meta name="keywords" content="Prime Factorization, Math Olympiad, Arithmetic, Practice Space, IDAI Universe, 3D Interactive">
+  <meta name="author" content="Rayaan Tasnim">
+  <title>Prime Factorization | The Ultimate Olympiad Arena</title>
+
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Plus+Jakarta+Sans:wght@300;500;800&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+  <!-- Three.js, GSAP, and ScrollTrigger CDNs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
   <style>
     body {
-      background: radial-gradient(circle at top, #0f172a, #1e293b, #000000);
-      color: white;
-      font-family: 'Orbitron', sans-serif;
-      text-align: center;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #02040a;
+      color: #f8fafc;
+      overflow-x: hidden;
     }
-    .logo {
-      max-width: 280px;
-      margin-bottom: 20px;
-      animation: pulse 3s infinite;
+    h1, h2, h3, .font-syncopate {
+      font-family: 'Syncopate', sans-serif;
     }
-    .btn-custom {
-      background: #f97316;
-      color: white;
-      font-weight: bold;
-      border-radius: 8px;
-      padding: 12px 24px;
-      transition: 0.3s;
+    .font-decorative {
+      font-family: 'Cinzel Decorative', serif;
     }
-    .btn-custom:hover {
-      background: #fb923c;
-      transform: scale(1.05);
-      box-shadow: 0 0 20px #fb923c;
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      pointer-events: none;
     }
-    .fade-in {
-      animation: fadeIn 2s ease-in-out;
+    .glass-panel {
+      background: rgba(10, 15, 30, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .neon-text-glow {
+      text-shadow: 0 0 25px rgba(56, 189, 248, 0.8), 0 0 50px rgba(168, 85, 247, 0.5);
     }
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.05); opacity: 0.9; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    footer {
-      margin-top: 40px;
-      font-size: 0.9rem;
-      color: #9ca3af;
-    }
-    .galactic-btn {
-      background: linear-gradient(90deg, #9333ea, #3b82f6, #06b6d4);
-      color: white;
-      font-weight: bold;
-      border-radius: 10px;
-      padding: 14px 28px;
-      transition: 0.4s;
-      margin-top: 20px;
-      font-family: 'Rajdhani', sans-serif;
-    }
-    .galactic-btn:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 25px #3b82f6;
+    .mesh-gradient {
+      background: radial-gradient(circle at 50% 50%, rgba(147, 51, 234, 0.15), rgba(6, 182, 212, 0.1), transparent);
     }
   </style>
 </head>
-<body>
-  <div class="fade-in">
-<center>    <img src="Prime Factor.png" alt="Prime Factor Logo" class="logo">
-</center>
-    <h1 class="text-3xl md:text-5xl font-bold mb-4">Welcome to <span class="text-orange-500">Prime Factorization Game</span></h1>
-    <p class="text-lg mb-5">Boost your arithmetic power and dive into prime factorization mastery!</p>
-    <a href="https://prime-factor-app--rayaantasnim.replit.app/" class="btn btn-custom">Enter Now</a>
-    <p class="mt-4 text-sm text-gray-300">Redirecting automatically in 5 seconds...</p>
+<body class="selection:bg-cyan-400 selection:text-black mesh-gradient">
+
+  <!-- 3D Interactive Background Canvas -->
+  <div id="canvas-container"></div>
+
+  <!-- Top Notification Bar (10s Countdown) -->
+  <div class="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-purple-950 via-indigo-950 to-cyan-950 text-center py-3 text-xs md:text-sm font-syncopate tracking-widest border-b border-cyan-500/40 shadow-2xl backdrop-blur-md">
+    ⚡ WARP GATEWAY ENGAGED — REDIRECTING TO ARENA IN <span id="countdown" class="text-cyan-400 font-bold text-base">10</span> SECONDS... 
+    <a href="https://prime-factor-app--rayaantasnim.replit.app/" class="underline ml-4 text-amber-300 hover:text-amber-200 transition-colors">ENTER INSTANTLY</a>
   </div>
 
-  <!-- Powered by Section -->
-  <section class="mt-10 fade-in">
-    <h2 class="text-2xl font-bold text-purple-400">✨ Powered by IDAI Universe ✨</h2>
-    <p class="mt-2 text-gray-300">Where cosmic innovation meets human intelligence.</p><br><br><br>
-    <a href="https://rayaantasnim.github.io/IDAI-all-link/Home.html" class="galactic-btn">🌌 Explore the Galactic Universe of IDAI</a>
+  <!-- Hero Section -->
+  <section class="min-h-screen flex flex-col items-center justify-center relative px-4 pt-20 pb-12">
+    <div class="glass-panel p-8 md:p-16 rounded-[2.5rem] max-w-5xl text-center relative overflow-hidden">
+      <div class="absolute -right-32 -top-32 w-64 h-64 bg-cyan-500/20 rounded-full blur-[100px]"></div>
+      <div class="absolute -left-32 -bottom-32 w-64 h-64 bg-purple-500/20 rounded-full blur-[100px]"></div>
+      
+      <span class="inline-block py-2 px-6 rounded-full bg-cyan-500/10 border border-cyan-400/40 text-cyan-300 text-xs md:text-sm font-syncopate tracking-widest mb-8 shadow-[0_0_20px_rgba(6,182,212,0.3)]">
+        ✦ THE ONLY SITE IN THE UNIVERSE DEDICATED SOLELY TO PRIME FACTORIZATIONS ✦
+      </span>
+
+      <h1 class="text-3xl md:text-6xl font-black tracking-wider mb-6 leading-tight uppercase font-syncopate">
+        A Practice Space for <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-300 to-purple-500 neon-text-glow">Sharp Minds</span>
+      </h1>
+
+      <p class="text-xl md:text-3xl text-gray-200 max-w-3xl mx-auto mb-4 font-decorative tracking-wide text-cyan-200/90">
+        "A small ritual for big competitions."
+      </p>
+
+      <p class="text-base md:text-lg text-gray-400 max-w-2xl mx-auto mb-10 font-light leading-relaxed">
+        Step beyond standard arithmetic. Master the primordial atomic building blocks of mathematics designed exclusively for elite Olympiad contenders.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+        <a href="https://prime-factor-app--rayaantasnim.replit.app/" class="w-full sm:w-auto px-10 py-5 rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 text-black font-syncopate font-black text-sm tracking-widest hover:scale-105 transition-all shadow-[0_0_40px_rgba(6,182,212,0.6)]">
+          LAUNCH ARENA NOW
+        </a>
+        <a href="https://rayaantasnim.github.io/IDAI-all-link/Home.html" class="w-full sm:w-auto px-10 py-5 rounded-2xl glass-panel text-white font-syncopate font-bold text-sm tracking-widest hover:bg-white/10 transition-all border border-purple-500/40">
+          IDAI UNIVERSE 🌌
+        </a>
+      </div>
+    </div>
   </section>
 
-  <!-- Footer -->
-  <footer>
-    <p>© 2026 Rayaan Tasnim — All Rights Reserved</p>
+  <!-- Horizontal Scroll Section (ScrollTrigger) -->
+  <section id="horizontal-section" class="h-screen overflow-hidden relative flex items-center bg-black/60 border-y border-cyan-500/30">
+    <div id="horizontal-track" class="flex gap-16 px-16 w-max">
+      
+      <!-- Card 1 -->
+      <div class="w-[85vw] md:w-[650px] glass-panel p-10 md:p-14 rounded-[2rem] flex flex-col justify-between shrink-0 relative overflow-hidden group hover:border-cyan-400/60 transition-all duration-500">
+        <div class="absolute top-0 right-0 p-8 text-7xl font-black text-cyan-500/10 font-syncopate">01</div>
+        <div>
+          <span class="text-cyan-400 font-syncopate text-xs tracking-widest uppercase">Cosmic Monopolization</span>
+        </div>
+        <div class="my-8">
+          <h2 class="text-3xl md:text-4xl font-bold font-syncopate mb-6 uppercase">Universal Singularity</h2>
+          <p class="text-gray-300 text-lg md:text-xl leading-relaxed font-light">
+            This stands as the <strong class="text-cyan-400 font-semibold">only site in the entire universe</strong> featuring tests, quizzes, and intensive drills engineered exclusively around prime factorizations. Unmatched focus, zero distractions.
+          </p>
+        </div>
+        <div class="text-xs text-cyan-300/80 font-syncopate tracking-widest uppercase">→ Scroll to unveil arena mechanics</div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="w-[85vw] md:w-[650px] glass-panel p-10 md:p-14 rounded-[2rem] flex flex-col justify-between shrink-0 relative overflow-hidden group hover:border-purple-400/60 transition-all duration-500">
+        <div class="absolute top-0 right-0 p-8 text-7xl font-black text-purple-500/10 font-syncopate">02</div>
+        <div>
+          <span class="text-purple-400 font-syncopate text-xs tracking-widest uppercase">High-Velocity Trials</span>
+        </div>
+        <div class="my-8">
+          <h2 class="text-3xl md:text-4xl font-bold font-syncopate mb-6 uppercase">8 Questions • 3 Minutes</h2>
+          <p class="text-gray-300 text-lg md:text-xl leading-relaxed font-light">
+            An intense gauntlet of speed and mental precision. Conquer <strong class="text-purple-400 font-semibold">8 rigorous factorization challenges within 3 breathless minutes</strong> to forge unbreakable cognitive reflexes.
+          </p>
+        </div>
+        <div class="text-xs text-purple-300/80 font-syncopate tracking-widest uppercase">→ Built for Elite Competitors</div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="w-[85vw] md:w-[650px] glass-panel p-10 md:p-14 rounded-[2rem] flex flex-col justify-between shrink-0 relative overflow-hidden group hover:border-amber-400/60 transition-all duration-500">
+        <div class="absolute top-0 right-0 p-8 text-7xl font-black text-amber-500/10 font-syncopate">03</div>
+        <div>
+          <span class="text-amber-400 font-syncopate text-xs tracking-widest uppercase">Scoring & Difficulty Matrix</span>
+        </div>
+        <div class="my-8">
+          <h2 class="text-3xl md:text-4xl font-bold font-syncopate mb-6 uppercase">+10 / -2 & 6 Tiers</h2>
+          <p class="text-gray-300 text-lg md:text-xl leading-relaxed font-light">
+            Earn <strong class="text-amber-400 font-semibold">+10 points</strong> for every correct strike, risk <strong class="text-rose-400 font-semibold">-2 points</strong> for errors or skips. Select your battleground across <strong class="text-amber-400 font-semibold">6 meticulous difficulty ranges</strong>.
+          </p>
+        </div>
+        <div class="text-xs text-amber-300/80 font-syncopate tracking-widest uppercase">→ Master All 6 Difficulty Ranges</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer class="py-16 px-4 text-center border-t border-cyan-900/40 bg-black/90">
+    <p class="text-cyan-400/80 text-xs md:text-sm font-syncopate tracking-widest mb-3">POWERED BY IDAI UNIVERSE — WHERE COSMIC INNOVATION MEETS HUMAN INTELLIGENCE</p>
+    <p class="text-gray-500 text-xs font-light">© 2026 Rayaan Tasnim — All Rights Reserved</p>
   </footer>
+
+  <!-- Scripts -->
+  <script>
+    // 10-Second Countdown Timer for Automatic Redirection
+    let timeLeft = 10;
+    const countdownEl = document.getElementById('countdown');
+    const timer = setInterval(() => {
+      timeLeft--;
+      if(countdownEl) countdownEl.innerText = timeLeft;
+      if(timeLeft <= 0) {
+        clearInterval(timer);
+        window.location.href = "https://prime-factor-app--rayaantasnim.replit.app/";
+      }
+    }, 1000);
+
+    // Three.js Interactive Deep Space Particles & Geometric Core Animation
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    container.appendChild(renderer.domElement);
+
+    // Dense particle matrix representing prime numeric ether
+    const particleCount = 1200;
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+
+    for(let i = 0; i < particleCount * 3; i++) {
+      positions[i] = (Math.random() - 0.5) * 30;
+    }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const material = new THREE.PointsMaterial({
+      size: 0.05,
+      color: 0x38bdf8,
+      transparent: true,
+      opacity: 0.8
+    });
+
+    const particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+    camera.position.z = 6;
+
+    // Mouse interactive parallax shift
+    let mouseX = 0, mouseY = 0;
+    window.addEventListener('mousemove', (e) => {
+      mouseX = (e.clientX / window.innerWidth) - 0.5;
+      mouseY = (e.clientY / window.innerHeight) - 0.5;
+    });
+
+    // Render loop
+    const clock = new THREE.Clock();
+    function animate() {
+      requestAnimationFrame(animate);
+      const elapsedTime = clock.getElapsedTime();
+      particles.rotation.y = elapsedTime * 0.04 + mouseX * 0.4;
+      particles.rotation.x = elapsedTime * 0.02 + mouseY * 0.4;
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // Responsive window handler
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // GSAP ScrollTrigger Horizontal Scrolling Carousel Engine
+    gsap.registerPlugin(ScrollTrigger);
+    const track = document.getElementById('horizontal-track');
+    
+    gsap.to(track, {
+      x: () => -(track.scrollWidth - window.innerWidth + 150),
+      ease: "none",
+      scrollTrigger: {
+        trigger: "#horizontal-section",
+        pin: true,
+        scrub: 1.2,
+        end: () => "+=" + track.scrollWidth,
+        invalidateOnRefresh: true
+      }
+    });
+  </script>
 </body>
 </html>

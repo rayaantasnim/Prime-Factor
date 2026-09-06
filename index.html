@@ -1,18 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth dark" id="html-root">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="10;url=https://prime-factor-app--rayaantasnim.replit.app/">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="The only site in the universe featuring tests based exclusively on prime factorizations. Designed for math Olympiad seekers.">
-  <meta name="keywords" content="Prime Factorization, Math Olympiad, Arithmetic, Practice Space, IDAI Universe, 3D Interactive">
+  <meta name="description" content="The universe's ultimate dual-service prime factorization platform featuring elite Olympiad testing and an advanced real-time calculation engine. Authored by Rayaan Tasnim.">
+  <meta name="keywords" content="Prime Factorization, Math Olympiad, Calculator, Arithmetic, Practice Space, Rayaan Tasnim">
   <meta name="author" content="Rayaan Tasnim">
-  <title>Prime Factorization | The Ultimate Olympiad Arena</title>
+  <title>Prime Factorization | Dual Service Elite Portal</title>
+
+  <!-- Favicon Icon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2438bdf8'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Plus+Jakarta+Sans:wght@300;500;800&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cosmicVoid: '#000208',
+            deepSpace: '#03071e',
+            nebulaCyan: '#00f0ff',
+            neonPurple: '#b026ff',
+            stellarPink: '#ff007f'
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Upgraded Google Fonts (Orbitron & Rajdhani for Maximum Sci-Fi/Cosmic Vibe) -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&family=Plus+Jakarta+Sans:wght@300;500;800&family=Syncopate:wght@700&display=swap" rel="stylesheet">
   <!-- Three.js, GSAP, and ScrollTrigger CDNs -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -20,13 +38,14 @@
 
   <style>
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #02040a;
-      color: #f8fafc;
+      font-family: 'Rajdhani', 'Plus Jakarta Sans', sans-serif;
       overflow-x: hidden;
+      background-color: #000208;
+      color: #f0f6fc;
+      font-size: 1.1rem;
     }
-    h1, h2, h3, .font-syncopate {
-      font-family: 'Syncopate', sans-serif;
+    h1, h2, h3, .font-syncopate, .font-orbitron {
+      font-family: 'Orbitron', 'Syncopate', sans-serif;
     }
     .font-decorative {
       font-family: 'Cinzel Decorative', serif;
@@ -40,138 +59,398 @@
       z-index: -1;
       pointer-events: none;
     }
+    /* Upgraded Cosmic Universe Theme Styles */
     .glass-panel {
-      background: rgba(10, 15, 30, 0.7);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(56, 189, 248, 0.25);
-      box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+      background: rgba(2, 6, 23, 0.82);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      box-shadow: 0 0 60px rgba(0, 0, 0, 0.95), inset 0 0 25px rgba(0, 240, 255, 0.08);
+    }
+    .glass-panel-purple {
+      background: rgba(10, 2, 20, 0.82);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1px solid rgba(176, 38, 255, 0.25);
+      box-shadow: 0 0 60px rgba(0, 0, 0, 0.95), inset 0 0 25px rgba(176, 38, 255, 0.08);
     }
     .neon-text-glow {
-      text-shadow: 0 0 25px rgba(56, 189, 248, 0.8), 0 0 50px rgba(168, 85, 247, 0.5);
+      text-shadow: 0 0 25px rgba(0, 240, 255, 0.9), 0 0 50px rgba(176, 38, 255, 0.7);
+    }
+    .neon-purple-glow {
+      text-shadow: 0 0 25px rgba(176, 38, 255, 0.9), 0 0 50px rgba(255, 0, 127, 0.7);
     }
     .mesh-gradient {
-      background: radial-gradient(circle at 50% 50%, rgba(147, 51, 234, 0.15), rgba(6, 182, 212, 0.1), transparent);
+      background: radial-gradient(circle at 50% 20%, rgba(176, 38, 255, 0.15), rgba(0, 240, 255, 0.1), rgba(0, 2, 8, 1));
+    }
+
+    /* Horizontal Scrolling Container Customizations */
+    .horizontal-section-wrapper {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+    .horizontal-track {
+      display: flex;
+      gap: 3rem;
+      width: max-content;
+      padding: 2rem 4rem;
+      will-change: transform;
+    }
+
+    /* Custom Scrollbar for responsiveness & beauty */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #000208;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #00f0ff55;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #00f0ff;
     }
   </style>
 </head>
-<body class="selection:bg-cyan-400 selection:text-black mesh-gradient">
+<body class="selection:bg-cyan-400 selection:text-black mesh-gradient transition-colors duration-500">
 
-  <!-- 3D Interactive Background Canvas -->
+  <!-- 3D Interactive Cosmic Universe Background Canvas -->
   <div id="canvas-container"></div>
 
-  <!-- Top Notification Bar (10s Countdown) -->
-  <div class="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-purple-950 via-indigo-950 to-cyan-950 text-center py-3 text-xs md:text-sm font-syncopate tracking-widest border-b border-cyan-500/40 shadow-2xl backdrop-blur-md">
-    ⚡ WARP GATEWAY ENGAGED — REDIRECTING TO ARENA IN <span id="countdown" class="text-cyan-400 font-bold text-base">10</span> SECONDS... 
-    <a href="https://prime-factor-app--rayaantasnim.replit.app/" class="underline ml-4 text-amber-300 hover:text-amber-200 transition-colors">ENTER INSTANTLY</a>
-  </div>
+  <!-- Upgraded Top Navbar with Interactive Toggler & Dual Buttons -->
+  <nav class="fixed top-0 left-0 w-full z-50 glass-panel border-b border-cyan-500/30 px-6 py-4 transition-all duration-300">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <a href="#" class="font-orbitron font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-teal-200 to-purple-400 text-base sm:text-xl tracking-wider flex items-center gap-3">
+        <span class="animate-pulse text-cyan-400 text-xl">⚡</span> PRIME DUAL PORTAL
+      </a>
 
-  <!-- Hero Section -->
-  <section class="min-h-screen flex flex-col items-center justify-center relative px-4 pt-20 pb-12">
-    <div class="glass-panel p-8 md:p-16 rounded-[2.5rem] max-w-5xl text-center relative overflow-hidden">
-      <div class="absolute -right-32 -top-32 w-64 h-64 bg-cyan-500/20 rounded-full blur-[100px]"></div>
-      <div class="absolute -left-32 -bottom-32 w-64 h-64 bg-purple-500/20 rounded-full blur-[100px]"></div>
+      <div class="flex items-center gap-4">
+        <button id="nav-toggler" class="md:hidden px-3 py-2 rounded-xl bg-cyan-500/20 border border-cyan-400/50 text-cyan-300 font-orbitron text-xs tracking-widest flex items-center gap-2 hover:bg-cyan-500/35 transition-all focus:outline-none">
+          <span>MENU</span>
+          <svg class="w-4 h-4 transition-transform duration-300" id="toggler-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+
+        <div id="nav-dual-buttons" class="hidden md:flex items-center gap-3 absolute md:relative top-full left-0 right-0 md:top-auto glass-panel md:glass-panel-none p-4 md:p-0 border-b md:border-none border-cyan-500/30 flex-col md:flex-row shadow-2xl transition-all duration-300">
+          <a href="calculator.html" class="w-full md:w-auto px-4 py-2.5 rounded-xl bg-purple-600/20 border border-purple-400/50 text-purple-300 font-orbitron text-xs tracking-widest hover:bg-purple-600/30 transition-all shadow-[0_0_15px_rgba(176,38,255,0.3)] text-center">
+            Prime Calculator
+          </a>
+          <a href="https://prime-factor-app--rayaantasnim.replit.app/" class="w-full md:w-auto px-4 py-2.5 rounded-xl bg-cyan-500/20 border border-cyan-400/50 text-cyan-300 font-orbitron text-xs tracking-widest hover:bg-cyan-500/30 transition-all shadow-[0_0_15px_rgba(0,240,255,0.3)] text-center">
+            Olympiad Arena
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Section 1: Hero Section with Cosmic Universe Background -->
+  <section class="min-h-screen flex flex-col items-center justify-center relative px-4 pt-32 pb-16">
+    <div class="glass-panel p-6 sm:p-12 md:p-16 rounded-[2.5rem] max-w-5xl text-center relative overflow-hidden border border-cyan-500/40">
+      <div class="absolute -right-32 -top-32 w-72 h-72 bg-cyan-500/20 rounded-full blur-[120px] pointer-events-none"></div>
+      <div class="absolute -left-32 -bottom-32 w-72 h-72 bg-purple-600/20 rounded-full blur-[120px] pointer-events-none"></div>
       
-      <span class="inline-block py-2 px-6 rounded-full bg-cyan-500/10 border border-cyan-400/40 text-cyan-300 text-xs md:text-sm font-syncopate tracking-widest mb-8 shadow-[0_0_20px_rgba(6,182,212,0.3)]">
-        ✦ THE ONLY SITE IN THE UNIVERSE DEDICATED SOLELY TO PRIME FACTORIZATIONS ✦
+      <!-- Cosmic Visual Element -->
+      <div class="mb-8 rounded-2xl overflow-hidden border border-cyan-400/40 max-h-60 relative group shadow-2xl">
+        <img src="https://images.pexels.com/photos/2156881/pexels-photo-2156881.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Cosmic 3D Cloud Background" class="w-full h-48 md:h-56 object-cover opacity-80 group-hover:scale-105 transition-transform duration-700">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#000208] via-transparent to-transparent"></div>
+        <span class="absolute bottom-3 left-1/2 -translate-x-1/2 py-1 px-4 sm:px-6 rounded-full bg-cyan-950/90 border border-cyan-400/50 text-cyan-300 text-[10px] sm:text-xs font-orbitron tracking-widest shadow-lg whitespace-nowrap">
+          ✦ THE UNIVERSE'S PREMIER DUAL MATHEMATICAL ECOSYSTEM ✦
+        </span>
+      </div>
+
+      <span class="inline-block py-1.5 px-5 rounded-full bg-cyan-500/15 border border-cyan-400/40 text-cyan-300 text-xs md:text-sm font-orbitron tracking-widest mb-6 shadow-[0_0_15px_rgba(0,240,255,0.2)]">
+        REVOLUTIONIZING ARITHMETIC MASTERY IN THE COSMIC VOID
       </span>
 
-      <h1 class="text-3xl md:text-6xl font-black tracking-wider mb-6 leading-tight uppercase font-syncopate">
-        A Practice Space for <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-300 to-purple-500 neon-text-glow">Sharp Minds</span>
+      <h1 class="text-3xl sm:text-5xl md:text-6xl font-black tracking-wider mb-6 leading-tight uppercase font-orbitron text-white">
+        Conquer the Prime <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-teal-300 to-purple-400 neon-text-glow">Singularity</span>
       </h1>
 
-      <p class="text-xl md:text-3xl text-gray-200 max-w-3xl mx-auto mb-4 font-decorative tracking-wide text-cyan-200/90">
-        "A small ritual for big competitions."
+      <p class="text-lg sm:text-2xl max-w-3xl mx-auto mb-4 font-decorative tracking-wide text-cyan-200">
+        "Where elite competitive pressure meets instant computational precision across space-time."
       </p>
 
-      <p class="text-base md:text-lg text-gray-400 max-w-2xl mx-auto mb-10 font-light leading-relaxed">
-        Step beyond standard arithmetic. Master the primordial atomic building blocks of mathematics designed exclusively for elite Olympiad contenders.
+      <p class="text-sm sm:text-lg text-gray-300 max-w-2xl mx-auto mb-10 font-medium leading-relaxed">
+        Experience the world's most sophisticated numerical landing platform combining high-stakes Math Olympiad testing with an unlimited septillion-scale prime factorization calculator.
       </p>
 
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
-        <a href="https://prime-factor-app--rayaantasnim.replit.app/" class="w-full sm:w-auto px-10 py-5 rounded-2xl bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 text-black font-syncopate font-black text-sm tracking-widest hover:scale-105 transition-all shadow-[0_0_40px_rgba(6,182,212,0.6)]">
-          LAUNCH ARENA NOW
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
+        <a href="#dual-cards-container" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-400 via-teal-400 to-purple-600 text-black font-orbitron font-black text-xs sm:text-sm tracking-widest hover:scale-105 transition-all shadow-[0_0_35px_rgba(0,240,255,0.7)] text-center">
+          EXPLORE DUAL SECTIONS
         </a>
-        <a href="https://rayaantasnim.github.io/IDAI-all-link/Home.html" class="w-full sm:w-auto px-10 py-5 rounded-2xl glass-panel text-white font-syncopate font-bold text-sm tracking-widest hover:bg-white/10 transition-all border border-purple-500/40">
-          IDAI UNIVERSE 🌌
+        <a href="https://prime-factor-app--rayaantasnim.replit.app/" class="w-full sm:w-auto px-8 py-4 rounded-2xl glass-panel text-white font-orbitron font-bold text-xs sm:text-sm tracking-widest hover:bg-white/10 transition-all border border-purple-500/50 shadow-[0_0_35px_rgba(176,38,255,0.4)] text-center">
+          LAUNCH OLYMPIAD ARENA
         </a>
       </div>
     </div>
   </section>
 
-  <!-- Horizontal Scroll Section (ScrollTrigger) -->
-  <section id="horizontal-section" class="h-screen overflow-hidden relative flex items-center bg-black/60 border-y border-cyan-500/30">
-    <div id="horizontal-track" class="flex gap-16 px-16 w-max">
+  <!-- Horizontal Scroll Sections Wrapper: Dual Separated Carousels -->
+  <section id="dual-cards-container" class="horizontal-section-wrapper h-screen flex items-center">
+    <div class="horizontal-track" id="horizontal-track">
+
+      <!-- ========================================== -->
+      <!-- CAROUSEL 1: OLYMPIAD TEST (Cards 1 to 3)    -->
+      <!-- ========================================== -->
+
+      <!-- Horizontal Card 1: Primary Service - Elite Math Olympiad Test (Overview) -->
+      <div class="w-[88vw] sm:w-[620px] md:w-[650px] h-[75vh] glass-panel p-6 sm:p-10 md:p-12 rounded-[2.5rem] flex flex-col justify-between relative overflow-hidden border border-cyan-500/50 shadow-[0_0_50px_rgba(0,240,255,0.25)] shrink-0">
+        <div class="absolute -right-20 -top-20 w-60 h-60 bg-cyan-500/15 rounded-full blur-[80px] pointer-events-none"></div>
+        <div>
+          <div class="flex justify-between items-center mb-6">
+            <span class="py-1 px-3 sm:px-4 rounded-full bg-cyan-500/15 border border-cyan-400/50 text-cyan-300 text-[10px] sm:text-xs font-orbitron tracking-widest">
+              ✦ CAROUSEL 1 : OLYMPIAD ARENA ✦
+            </span>
+            <span class="font-orbitron text-cyan-300 text-xs sm:text-sm font-black">01 / 06</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl md:text-3xl font-black font-orbitron mb-4 uppercase text-white leading-tight">
+            Elite Math <span class="text-cyan-300 neon-text-glow">Olympiad Testing</span>
+          </h2>
+          <p class="text-gray-200 text-xs sm:text-sm md:text-base leading-relaxed mb-6 font-medium">
+            Designed explicitly for competitive math olympiad seekers. Test your capabilities solely on prime numbers through rigorous, professional-grade digital evaluation architectures.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+            <div class="p-4 rounded-2xl bg-cyan-950/50 border border-cyan-500/30 shadow-inner">
+              <div class="text-cyan-300 font-orbitron text-xs font-bold mb-1">SCORING MATRIX</div>
+              <div class="text-gray-300 text-xs">+10 points correct, -2 points for wrong/skipped answers.</div>
+            </div>
+            <div class="p-4 rounded-2xl bg-purple-950/50 border border-purple-500/30 shadow-inner">
+              <div class="text-purple-300 font-orbitron text-xs font-bold mb-1">DIFFICULTY RANGES</div>
+              <div class="text-gray-300 text-xs">6 customizable tiers to match your precise competitive level.</div>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between border-t border-cyan-500/30 pt-4">
+          <span class="text-[10px] sm:text-xs font-orbitron text-cyan-300 tracking-widest">SCROLL TO ADVANCE →</span>
+          <a href="https://prime-factor-app--rayaantasnim.replit.app/" class="px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl bg-cyan-400 text-black font-orbitron font-bold text-xs tracking-widest hover:bg-cyan-300 transition-all shadow-[0_0_20px_rgba(0,240,255,0.5)]">
+            Launch Replit App
+          </a>
+        </div>
+      </div>
+
+      <!-- Horizontal Card 2: Olympiad Features (Timer & Open Source Exams) -->
+      <div class="w-[88vw] sm:w-[620px] md:w-[650px] h-[75vh] glass-panel p-6 sm:p-10 md:p-12 rounded-[2.5rem] flex flex-col justify-between relative overflow-hidden border border-cyan-500/50 shadow-[0_0_50px_rgba(0,240,255,0.25)] shrink-0">
+        <div class="absolute -right-20 -bottom-20 w-60 h-60 bg-cyan-500/15 rounded-full blur-[80px] pointer-events-none"></div>
+        <div>
+          <div class="flex justify-between items-center mb-6">
+            <span class="py-1 px-3 sm:px-4 rounded-full bg-cyan-500/15 border border-cyan-400/50 text-cyan-300 text-[10px] sm:text-xs font-orbitron tracking-widest">
+              ✦ CAROUSEL 1 : OLYMPIAD MECHANICS ✦
+            </span>
+            <span class="font-orbitron text-cyan-300 text-xs sm:text-sm font-black">02 / 06</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl md:text-3xl font-black font-orbitron mb-4 uppercase text-white leading-tight">
+            180 Seconds <span class="text-cyan-300 neon-text-glow">Pressure Test</span>
+          </h2>
+          <p class="text-gray-200 text-xs sm:text-sm md:text-base leading-relaxed mb-6 font-medium">
+            Engage in unlimited open-source exams structured specifically to simulate live international competition constraints and razor-sharp mental agility.
+          </p>
+          <ul class="space-y-3 mb-6 text-xs sm:text-sm text-gray-200 font-medium">
+            <li class="flex items-center gap-3">⚡ <strong class="text-cyan-300 font-bold">8 High-Stakes Questions</strong> per test session</li>
+            <li class="flex items-center gap-3">⚡ <strong class="text-cyan-300 font-bold">Strict 180-Second Timer</strong> forcing rapid calculation</li>
+            <li class="flex items-center gap-3">⚡ <strong class="text-cyan-300 font-bold">Unlimited Free Practice</strong> across all available difficulty tiers</li>
+          </ul>
+        </div>
+        <div class="flex items-center justify-between border-t border-cyan-500/30 pt-4">
+          <span class="text-[10px] sm:text-xs font-orbitron text-cyan-300 tracking-widest">SCROLL TO ADVANCE →</span>
+          <a href="https://prime-factor-app--rayaantasnim.replit.app/" class="px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl bg-gradient-to-r from-cyan-400 to-teal-500 text-black font-orbitron font-bold text-xs tracking-widest hover:scale-105 transition-all shadow-[0_0_25px_rgba(0,240,255,0.6)]">
+            Start Olympiad Test
+          </a>
+        </div>
+      </div>
+
+      <!-- Horizontal Card 3: Olympiad Error Review & Correct Answer Sheets -->
+      <div class="w-[88vw] sm:w-[620px] md:w-[650px] h-[75vh] glass-panel p-6 sm:p-10 md:p-12 rounded-[2.5rem] flex flex-col justify-between relative overflow-hidden border border-cyan-500/50 shadow-[0_0_50px_rgba(0,240,255,0.25)] shrink-0">
+        <div class="absolute -right-20 -bottom-20 w-60 h-60 bg-cyan-500/15 rounded-full blur-[80px] pointer-events-none"></div>
+        <div>
+          <div class="flex justify-between items-center mb-6">
+            <span class="py-1 px-3 sm:px-4 rounded-full bg-cyan-500/15 border border-cyan-400/50 text-cyan-300 text-[10px] sm:text-xs font-orbitron tracking-widest">
+              ✦ CAROUSEL 1 : OLYMPIAD ANALYTICS ✦
+            </span>
+            <span class="font-orbitron text-cyan-300 text-xs sm:text-sm font-black">03 / 06</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl md:text-3xl font-black font-orbitron mb-4 uppercase text-white leading-tight">
+            Comprehensive <span class="text-cyan-300 neon-text-glow">Answer Sheets</span>
+          </h2>
+          <p class="text-gray-200 text-xs sm:text-sm md:text-base leading-relaxed mb-6 font-medium">
+            Never wonder where you went wrong. The platform generates detailed correct answer sheets for every missed question, ensuring continuous cognitive growth.
+          </p>
+          <div class="p-5 rounded-2xl bg-cyan-950/50 border border-cyan-500/30 mb-6 shadow-inner">
+            <div class="text-cyan-300 font-orbitron text-xs font-bold mb-1">TARGETED IMPROVEMENT</div>
+            <div class="text-gray-300 text-xs">Review skipped or incorrect breakdowns instantly to master prime number patterns permanently.</div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between border-t border-cyan-500/30 pt-4">
+          <span class="text-[10px] sm:text-xs font-orbitron text-cyan-300 tracking-widest">SCROLL TO ADVANCE →</span>
+          <a href="https://prime-factor-app--rayaantasnim.replit.app/" class="px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl bg-cyan-400 text-black font-orbitron font-bold text-xs tracking-widest hover:bg-cyan-300 transition-all shadow-[0_0_20px_rgba(0,240,255,0.5)]">
+            Test Your Skills
+          </a>
+        </div>
+      </div>
+
+
+      <!-- ========================================== -->
+      <!-- CAROUSEL 2: CALCULATOR (Cards 4 to 6)     -->
+      <!-- ========================================== -->
+
+      <!-- Horizontal Card 4: Secondary Service - Prime Number Calculator (Overview & Scale) -->
+      <div class="w-[88vw] sm:w-[620px] md:w-[650px] h-[75vh] glass-panel-purple p-6 sm:p-10 md:p-12 rounded-[2.5rem] flex flex-col justify-between relative overflow-hidden border border-purple-500/50 shadow-[0_0_50px_rgba(176,38,255,0.25)] shrink-0">
+        <div class="absolute -left-20 -top-20 w-60 h-60 bg-purple-600/20 rounded-full blur-[80px] pointer-events-none"></div>
+        <div>
+          <div class="flex justify-between items-center mb-6">
+            <span class="py-1 px-3 sm:px-4 rounded-full bg-purple-500/20 border border-purple-400/50 text-purple-300 text-[10px] sm:text-xs font-orbitron tracking-widest">
+              ✦ CAROUSEL 2 : CALCULATOR ENGINE ✦
+            </span>
+            <span class="font-orbitron text-purple-300 text-xs sm:text-sm font-black">04 / 06</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl md:text-3xl font-black font-orbitron mb-4 uppercase text-white leading-tight">
+            Prime Number <span class="text-purple-300 neon-purple-glow">Decomposition</span>
+          </h2>
+          <p class="text-gray-200 text-xs sm:text-sm md:text-base leading-relaxed mb-6 font-medium">
+            The second core option in our menu. Enter any massive integer and watch the system instantly break it down into its constituent prime factors with total precision.
+          </p>
+          <div class="p-5 rounded-2xl bg-purple-950/50 border border-purple-500/30 mb-6 shadow-inner">
+            <div class="text-purple-300 font-orbitron text-xs font-bold mb-1">INSTANT COMPUTATIONAL ENGINE</div>
+            <div class="text-gray-300 text-xs">Lightning-fast factorization pipeline built for absolute numerical clarity.</div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between border-t border-purple-500/30 pt-4">
+          <span class="text-[10px] sm:text-xs font-orbitron text-purple-300 tracking-widest">SCROLL TO ADVANCE →</span>
+          <a href="calculator.html" class="px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl bg-purple-500 text-white font-orbitron font-bold text-xs tracking-widest hover:bg-purple-400 transition-all shadow-[0_0_20px_rgba(176,38,255,0.5)]">
+            Open Calculator
+          </a>
+        </div>
+      </div>
+
+      <!-- Horizontal Card 5: Calculator Capacity - Septillions & Unlimited Usage -->
+      <div class="w-[88vw] sm:w-[620px] md:w-[650px] h-[75vh] glass-panel-purple p-6 sm:p-10 md:p-12 rounded-[2.5rem] flex flex-col justify-between relative overflow-hidden border border-purple-500/50 shadow-[0_0_50px_rgba(176,38,255,0.25)] shrink-0">
+        <div class="absolute -left-20 -top-20 w-60 h-60 bg-purple-600/20 rounded-full blur-[80px] pointer-events-none"></div>
+        <div>
+          <div class="flex justify-between items-center mb-6">
+            <span class="py-1 px-3 sm:px-4 rounded-full bg-purple-500/20 border border-purple-400/50 text-purple-300 text-[10px] sm:text-xs font-orbitron tracking-widest">
+              ✦ CAROUSEL 2 : SEPTILLION SCALE ✦
+            </span>
+            <span class="font-orbitron text-purple-300 text-xs sm:text-sm font-black">05 / 06</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl md:text-3xl font-black font-orbitron mb-4 uppercase text-white leading-tight">
+            Up to <span class="text-purple-300 neon-purple-glow">Septillions</span> Scale
+          </h2>
+          <p class="text-gray-200 text-xs sm:text-sm md:text-base leading-relaxed mb-6 font-medium">
+            Process astronomical integers effortlessly. Our calculator handles colossal scales up to septillions while offering 100% unlimited free usage for all users.
+          </p>
+          <ul class="space-y-3 mb-6 text-xs sm:text-sm text-gray-200 font-medium">
+            <li class="flex items-center gap-2">✦ <strong class="text-purple-300 font-bold">Septillion-Scale Numbers</strong> fully supported</li>
+            <li class="flex items-center gap-2">✦ <strong class="text-purple-300 font-bold">Unlimited Free Usage</strong> with zero restrictions</li>
+            <li class="flex items-center gap-2">✦ <strong class="text-purple-300 font-bold">Exponential Breakdown</strong> view for prime components</li>
+          </ul>
+        </div>
+        <div class="flex items-center justify-between border-t border-purple-500/30 pt-4">
+          <span class="text-[10px] sm:text-xs font-orbitron text-purple-300 tracking-widest">SCROLL TO ADVANCE →</span>
+          <a href="calculator.html" class="px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl bg-gradient-to-r from-purple-500 to-pink-600 text-white font-orbitron font-bold text-xs tracking-widest hover:scale-105 transition-all shadow-[0_0_25px_rgba(176,38,255,0.6)]">
+            Try Calculator Now
+          </a>
+        </div>
+      </div>
+
+      <!-- Horizontal Card 6: Ultimate Synergy & Authorship -->
+      <div class="w-[88vw] sm:w-[620px] md:w-[650px] h-[75vh] glass-panel-purple p-6 sm:p-10 md:p-12 rounded-[2.5rem] flex flex-col justify-between relative overflow-hidden border border-pink-500/50 shadow-[0_0_50px_rgba(255,0,127,0.25)] shrink-0">
+        <div class="absolute -right-20 -bottom-20 w-60 h-60 bg-pink-600/20 rounded-full blur-[80px] pointer-events-none"></div>
+        <div>
+          <div class="flex justify-between items-center mb-6">
+            <span class="py-1 px-3 sm:px-4 rounded-full bg-pink-500/20 border border-pink-400/50 text-pink-300 text-[10px] sm:text-xs font-orbitron tracking-widest">
+              ✦ CAROUSEL 2 : PORTAL SYNERGY ✦
+            </span>
+            <span class="font-orbitron text-pink-300 text-xs sm:text-sm font-black">06 / 06</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl md:text-3xl font-black font-orbitron mb-4 uppercase text-white leading-tight">
+            The World's Best <span class="text-pink-300 neon-purple-glow">Math Portal</span>
+          </h2>
+          <p class="text-gray-200 text-xs sm:text-sm md:text-base leading-relaxed mb-6 font-medium">
+            Authored by Rayaan Tasnim, this dual-service landing page merges elite Olympiad competition testing with infinite computational power into a single cosmic ecosystem.
+          </p>
+          <div class="p-5 rounded-2xl bg-pink-950/50 border border-pink-500/30 mb-6 shadow-inner">
+            <div class="text-pink-300 font-orbitron text-xs font-bold mb-1">ABSOLUTE NUMERICAL DOMINANCE</div>
+            <div class="text-gray-300 text-xs">Switch seamlessly between competitive exam training and massive integer factorization.</div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between border-t border-pink-500/30 pt-4">
+          <span class="text-[10px] sm:text-xs font-orbitron text-pink-300 tracking-widest">END OF DUAL CAROUSELS</span>
+          <a href="https://prime-factor-app--rayaantasnim.replit.app/" class="px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl bg-pink-600 text-white font-orbitron font-bold text-xs tracking-widest hover:bg-pink-500 transition-all shadow-[0_0_20px_rgba(255,0,127,0.5)]">
+            Launch Platform
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section: Final Recommendation / Call to Action -->
+  <section class="py-24 px-4 relative max-w-4xl mx-auto text-center">
+    <div class="glass-panel p-8 sm:p-12 md:p-16 rounded-[2.5rem] border border-cyan-500/40 shadow-2xl relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-600/10 to-transparent pointer-events-none"></div>
       
-      <!-- Card 1 -->
-      <div class="w-[85vw] md:w-[650px] glass-panel p-10 md:p-14 rounded-[2rem] flex flex-col justify-between shrink-0 relative overflow-hidden group hover:border-cyan-400/60 transition-all duration-500">
-        <div class="absolute top-0 right-0 p-8 text-7xl font-black text-cyan-500/10 font-syncopate">01</div>
-        <div>
-          <span class="text-cyan-400 font-syncopate text-xs tracking-widest uppercase">Cosmic Monopolization</span>
-        </div>
-        <div class="my-8">
-          <h2 class="text-3xl md:text-4xl font-bold font-syncopate mb-6 uppercase">Universal Singularity</h2>
-          <p class="text-gray-300 text-lg md:text-xl leading-relaxed font-light">
-            This stands as the <strong class="text-cyan-400 font-semibold">only site in the entire universe</strong> featuring tests, quizzes, and intensive drills engineered exclusively around prime factorizations. Unmatched focus, zero distractions.
-          </p>
-        </div>
-        <div class="text-xs text-cyan-300/80 font-syncopate tracking-widest uppercase">→ Scroll to unveil arena mechanics</div>
-      </div>
+      <span class="text-cyan-300 font-orbitron text-xs tracking-widest uppercase mb-4 block">Universal Supremacy</span>
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-black font-orbitron mb-6 uppercase text-white">Master Your Mathematical Destiny</h2>
+      
+      <p class="text-gray-200 text-base sm:text-xl font-medium leading-relaxed max-w-2xl mx-auto mb-10">
+        Choose your path: conquer the 3-minute Olympiad test arena or calculate prime factors up to septillions instantly with zero limits.
+      </p>
 
-      <!-- Card 2 -->
-      <div class="w-[85vw] md:w-[650px] glass-panel p-10 md:p-14 rounded-[2rem] flex flex-col justify-between shrink-0 relative overflow-hidden group hover:border-purple-400/60 transition-all duration-500">
-        <div class="absolute top-0 right-0 p-8 text-7xl font-black text-purple-500/10 font-syncopate">02</div>
-        <div>
-          <span class="text-purple-400 font-syncopate text-xs tracking-widest uppercase">High-Velocity Trials</span>
-        </div>
-        <div class="my-8">
-          <h2 class="text-3xl md:text-4xl font-bold font-syncopate mb-6 uppercase">8 Questions • 3 Minutes</h2>
-          <p class="text-gray-300 text-lg md:text-xl leading-relaxed font-light">
-            An intense gauntlet of speed and mental precision. Conquer <strong class="text-purple-400 font-semibold">8 rigorous factorization challenges within 3 breathless minutes</strong> to forge unbreakable cognitive reflexes.
-          </p>
-        </div>
-        <div class="text-xs text-purple-300/80 font-syncopate tracking-widest uppercase">→ Built for Elite Competitors</div>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="https://prime-factor-app--rayaantasnim.replit.app/" class="px-8 py-4 rounded-xl bg-cyan-400 text-black font-orbitron font-bold text-xs sm:text-sm tracking-widest hover:bg-cyan-300 transition-all shadow-[0_0_25px_rgba(0,240,255,0.6)] text-center">
+          Launch Olympiad Test Arena
+        </a>
+        <a href="calculator.html" class="px-8 py-4 rounded-xl bg-purple-600 text-white font-orbitron font-bold text-xs sm:text-sm tracking-widest hover:bg-purple-500 transition-all shadow-[0_0_25px_rgba(176,38,255,0.6)] text-center">
+          Launch Calculator Portal
+        </a>
       </div>
-
-      <!-- Card 3 -->
-      <div class="w-[85vw] md:w-[650px] glass-panel p-10 md:p-14 rounded-[2rem] flex flex-col justify-between shrink-0 relative overflow-hidden group hover:border-amber-400/60 transition-all duration-500">
-        <div class="absolute top-0 right-0 p-8 text-7xl font-black text-amber-500/10 font-syncopate">03</div>
-        <div>
-          <span class="text-amber-400 font-syncopate text-xs tracking-widest uppercase">Scoring & Difficulty Matrix</span>
-        </div>
-        <div class="my-8">
-          <h2 class="text-3xl md:text-4xl font-bold font-syncopate mb-6 uppercase">+10 / -2 & 6 Tiers</h2>
-          <p class="text-gray-300 text-lg md:text-xl leading-relaxed font-light">
-            Earn <strong class="text-amber-400 font-semibold">+10 points</strong> for every correct strike, risk <strong class="text-rose-400 font-semibold">-2 points</strong> for errors or skips. Select your battleground across <strong class="text-amber-400 font-semibold">6 meticulous difficulty ranges</strong>.
-          </p>
-        </div>
-        <div class="text-xs text-amber-300/80 font-syncopate tracking-widest uppercase">→ Master All 6 Difficulty Ranges</div>
-      </div>
-
     </div>
   </section>
 
-  <!-- Footer Section -->
-  <footer class="py-16 px-4 text-center border-t border-cyan-900/40 bg-black/90">
-    <p class="text-cyan-400/80 text-xs md:text-sm font-syncopate tracking-widest mb-3">POWERED BY IDAI UNIVERSE — WHERE COSMIC INNOVATION MEETS HUMAN INTELLIGENCE</p>
-    <p class="text-gray-500 text-xs font-light">© 2026 Rayaan Tasnim — All Rights Reserved</p>
+  <!-- Section: Footer with Copyright and Authorship Credit -->
+  <footer class="py-16 px-4 text-center border-t border-cyan-900/50 bg-[#000104]/80 relative z-10">
+    <p class="text-cyan-300 text-xs sm:text-sm font-orbitron tracking-widest mb-3">
+      PORTAL AUTHORED BY <a href="https://rayaantasnim.github.io/Rayaan-Tasnim/" target="_blank" class="text-cyan-200 underline hover:text-cyan-400 font-bold transition-colors">Rayaan Tasnim</a>
+    </p>
+    <p class="text-gray-400 text-xs font-light">© 2026 Rayaan Tasnim — All Rights Reserved</p>
   </footer>
 
   <!-- Scripts -->
   <script>
-    // 10-Second Countdown Timer for Automatic Redirection
-    let timeLeft = 10;
-    const countdownEl = document.getElementById('countdown');
-    const timer = setInterval(() => {
-      timeLeft--;
-      if(countdownEl) countdownEl.innerText = timeLeft;
-      if(timeLeft <= 0) {
-        clearInterval(timer);
-        window.location.href = "https://prime-factor-app--rayaantasnim.replit.app/";
-      }
-    }, 1000);
+    // Navbar Toggler Functionality for Mobile
+    const navToggler = document.getElementById('nav-toggler');
+    const navDualButtons = document.getElementById('nav-dual-buttons');
+    const togglerIcon = document.getElementById('toggler-icon');
 
-    // Three.js Interactive Deep Space Particles & Geometric Core Animation
+    navToggler.addEventListener('click', () => {
+      navDualButtons.classList.toggle('hidden');
+      togglerIcon.classList.toggle('rotate-180');
+    });
+
+    // GSAP ScrollTrigger Horizontal Scrolling Implementation
+    gsap.registerPlugin(ScrollTrigger);
+
+    const track = document.getElementById("horizontal-track");
+    
+    // Calculate total horizontal scroll width dynamically
+    let getScrollAmount = () => -(track.scrollWidth - window.innerWidth);
+
+    const tween = gsap.to(track, {
+      x: getScrollAmount,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".horizontal-section-wrapper",
+        start: "top top",
+        end: () => `+=${track.scrollWidth - window.innerWidth}`,
+        pin: true,
+        scrub: 1,
+        invalidateOnRefresh: true,
+        anticipatePin: 1
+      }
+    });
+
+    // Three.js Interactive 3D Cosmic Universe Background with Cursor Movement
     const container = document.getElementById('canvas-container');
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -180,66 +459,55 @@
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    // Dense particle matrix representing prime numeric ether
-    const particleCount = 1200;
+    const particleCount = 2500;
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
 
     for(let i = 0; i < particleCount * 3; i++) {
-      positions[i] = (Math.random() - 0.5) * 30;
+      positions[i] = (Math.random() - 0.5) * 60;
     }
 
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     const material = new THREE.PointsMaterial({
-      size: 0.05,
-      color: 0x38bdf8,
+      size: 0.08,
+      color: 0x00f0ff,
       transparent: true,
-      opacity: 0.8
+      opacity: 0.9
     });
 
     const particles = new THREE.Points(geometry, material);
     scene.add(particles);
-    camera.position.z = 6;
+    camera.position.z = 8;
 
-    // Mouse interactive parallax shift
+    // Interactive Cursor Tracking
     let mouseX = 0, mouseY = 0;
+    let targetX = 0, targetY = 0;
+
     window.addEventListener('mousemove', (e) => {
       mouseX = (e.clientX / window.innerWidth) - 0.5;
       mouseY = (e.clientY / window.innerHeight) - 0.5;
     });
 
-    // Render loop
     const clock = new THREE.Clock();
     function animate() {
       requestAnimationFrame(animate);
       const elapsedTime = clock.getElapsedTime();
-      particles.rotation.y = elapsedTime * 0.04 + mouseX * 0.4;
-      particles.rotation.x = elapsedTime * 0.02 + mouseY * 0.4;
+
+      // Smooth interpolation for cursor rotation
+      targetX += (mouseX - targetX) * 0.05;
+      targetY += (mouseY - targetY) * 0.05;
+
+      particles.rotation.y = elapsedTime * 0.025 + targetX * 2.5;
+      particles.rotation.x = elapsedTime * 0.015 + targetY * 2.5;
+
       renderer.render(scene, camera);
     }
     animate();
 
-    // Responsive window handler
     window.addEventListener('resize', () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-
-    // GSAP ScrollTrigger Horizontal Scrolling Carousel Engine
-    gsap.registerPlugin(ScrollTrigger);
-    const track = document.getElementById('horizontal-track');
-    
-    gsap.to(track, {
-      x: () => -(track.scrollWidth - window.innerWidth + 150),
-      ease: "none",
-      scrollTrigger: {
-        trigger: "#horizontal-section",
-        pin: true,
-        scrub: 1.2,
-        end: () => "+=" + track.scrollWidth,
-        invalidateOnRefresh: true
-      }
     });
   </script>
 </body>

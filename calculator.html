@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Factor Determination</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --background: #f3f4f6;
+            --card-bg: #ffffff;
+            --text: #1f2937;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            margin-top: 0;
+            text-align: center;
+            color: #111827;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            outline: 2px solid var(--primary);
+            border-color: transparent;
+        }
+
+        button {
+            width: 100%;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .result-box {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 6px;
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            display: none;
+        }
+
+        .result-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .result-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .bold {
+            font-weight: 600;
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Prime Factor Calculator</h1>
+    <div class="input-group">
+        <label for="numberInput">Enter a positive integer:</label>
+        <input type="number" id="numberInput" min="2" placeholder="e.g., 84">
+    </div>
+    <button onclick="calculatePrimeFactors()">Determine Factors</button>
+
+    <div id="resultBox" class="result-box">
+        <div class="result-item">Prime Factors: <span id="factorsList" class="bold"></span></div>
+        <div class="result-item">Product Form: <span id="productForm" class="bold"></span></div>
+        <div class="result-item">Exponential Form: <span id="exponentialForm" class="bold"></span></div>
+    </div>
+</div>
+
+<script>
+    function calculatePrimeFactors() {
+        const input = document.getElementById('numberInput').value;
+        let num = parseInt(input);
+        
+        if (isNaN(num) || num < 2) {
+            alert("Please enter a valid integer greater than or equal to 2.");
+            return;
+        }
+
+        const originalNum = num;
+        const factors = [];
+        const countMap = {};
+
+        // Find the number of 2s that divide num
+        while (num % 2 === 0) {
+            factors.push(2);
+            countMap[2] = (countMap[2] || 0) + 1;
+            num /= 2;
+        }
+
+        // num must be odd at this point. So we can skip one element (Note i = i +2)
+        for (let i = 3; i <= Math.sqrt(num); i += 2) {
+            while (num % i === 0) {
+                factors.push(i);
+                countMap[i] = (countMap[i] || 0) + 1;
+                num /= i;
+            }
+        }
+
+        // This condition is to handle the case when num is a prime number
+        // greater than 2
+        if (num > 2) {
+            factors.push(num);
+            countMap[num] = (countMap[num] || 0) + 1;
+        }
+
+        // Generate Formatted Strings
+        const uniqueFactors = Object.keys(countMap).join(', ');
+        const productString = factors.join(' × ');
+        
+        const expParts = [];
+        for (const prime in countMap) {
+            if (countMap[prime] > 1) {
+                expParts.push(`${prime}<sup>${countMap[prime]}</sup>`);
+            } else {
+                expParts.push(prime);
+            }
+        }
+        const expString = expParts.join(' × ');
+
+        // Display results
+        document.getElementById('factorsList').textContent = uniqueFactors;
+        document.getElementById('productForm').textContent = productString;
+        document.getElementById('exponentialForm').innerHTML = expString;
+        document.getElementById('resultBox').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>

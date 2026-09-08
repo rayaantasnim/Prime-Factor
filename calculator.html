@@ -73,6 +73,21 @@
             z-index: 2;
         }
 
+        @keyframes sirenGlow {
+            0% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.5), inset 0 0 5px rgba(239, 68, 68, 0.5); border-color: #ef4444; }
+            50% { box-shadow: 0 0 30px rgba(239, 68, 68, 0.9), inset 0 0 15px rgba(239, 68, 68, 0.8); border-color: #fca5a5; }
+            100% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.5), inset 0 0 5px rgba(239, 68, 68, 0.5); border-color: #ef4444; }
+        }
+
+        .red-siren-glow {
+            animation: sirenGlow 0.8s infinite ease-in-out;
+        }
+
+        .red-static-glow {
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.7), inset 0 0 8px rgba(239, 68, 68, 0.5);
+            border-color: #ef4444;
+        }
+
         /* Fine-tuned Responsive Media Queries for iPhone and smaller screen widths */
         @media screen and (max-width: 640px) {
             header {
@@ -97,7 +112,7 @@
             }
             input[type="text"] {
                 font-size: 16px !important; /* Prevents auto-zoom on iOS Safari */
-                padding: 0.65rem 0.85rem !important;
+                padding: 0.65rem 2.5rem 0.65rem 0.85rem !important;
             }
             main {
                 padding-top: 0.5rem !important;
@@ -118,7 +133,7 @@
                 padding: 0.75rem !important;
             }
             input[type="text"] {
-                padding: 0.5rem 0.75rem !important;
+                padding: 0.5rem 2.2rem 0.5rem 0.75rem !important;
                 font-size: 16px !important;
             }
         }
@@ -135,9 +150,9 @@
 
             <div class="text-center max-w-3xl mx-auto mb-6 md:mb-10">
                 <span class="text-xs uppercase tracking-widest px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 font-semibold transition-all duration-300 hover:bg-cyan-500/20 hover:scale-105 cursor-default inline-block">High-Capacity Processing Matrix</span>
-                <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold mt-3 tracking-tight bg-gradient-to-r from-cyan-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent transition-all duration-300 hover:brightness-125 cursor-default">Unlimited Time Engine with Range up to 10³²</h1>
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold mt-3 tracking-tight bg-gradient-to-r from-cyan-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent transition-all duration-300 hover:brightness-125 cursor-default">Unlimited Time Engine with Range up to 10⁴⁰</h1>
                 <p class="text-slate-300 text-sm md:text-lg mt-3 md:mt-4 leading-relaxed transition-colors duration-300 hover:text-white cursor-default">
-                    Designed to run for unlimited time with a numerical operational range up to 10 to the power 32. Values exceeding 10 to the power 32 trigger an automatic boundary limit exceed error with dynamic range recovery.
+                    Designed to run for unlimited time with a numerical operational range up to 10 to the power 40. Values exceeding 10 to the power 40 trigger an automatic boundary limit exceed error with dynamic range recovery.
                 </p>
             </div>
 
@@ -160,7 +175,7 @@
                     <div>
                         <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-3 font-bold transition-all duration-300 hover:bg-blue-500/30 hover:scale-110 text-sm">03</div>
                         <h3 class="text-white font-semibold text-sm sm:text-base transition-colors duration-300 hover:text-blue-300">Precision Scale</h3>
-                        <p class="text-slate-400 text-xs sm:text-sm mt-1 transition-colors duration-300 hover:text-slate-200">Strict range controls enforcing safety boundaries up to 10³² digits.</p>
+                        <p class="text-slate-400 text-xs sm:text-sm mt-1 transition-colors duration-300 hover:text-slate-200">Strict range controls enforcing safety boundaries up to 10⁴⁰ digits.</p>
                     </div>
                 </div>
             </div>
@@ -182,9 +197,10 @@
             <div class="space-y-4 sm:space-y-6">
                 <div>
                     <label for="numberInput" class="block text-xs sm:text-sm font-medium text-slate-300 mb-1.5 sm:mb-2 transition-colors duration-300 hover:text-cyan-400 cursor-pointer">Input Target Integer:</label>
-                    <div class="relative">
-                        <input type="text" id="numberInput" autocomplete="off" placeholder="Enter any number (e.g., -42, 1e25, 997)..." 
-                            class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-3.5 sm:px-4 py-3 sm:py-3.5 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 hover:border-cyan-500/50 hover:bg-slate-900 transition-all text-base sm:text-lg shadow-inner">
+                    <div class="relative flex items-center">
+                        <input type="text" id="numberInput" autocomplete="off" placeholder="Enter any number (e.g., -42, 1e35, 997)..." 
+                            class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-3.5 sm:px-4 py-3 sm:py-3.5 pr-12 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 hover:border-cyan-500/50 hover:bg-slate-900 transition-all text-base sm:text-lg shadow-inner">
+                        <button id="clearBtn" class="absolute right-2.5 px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg text-xs font-semibold border border-slate-600 transition-all hidden z-10">Clear</button>
                     </div>
                 </div>
 
@@ -254,7 +270,6 @@
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         container.appendChild(renderer.domElement);
 
-        // Particle Grid Creation
         const particlesGeometry = new THREE.BufferGeometry();
         const particlesCount = 1200;
         const posArray = new Float32Array(particlesCount * 3);
@@ -300,18 +315,32 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // Application Logic & Ultra-Optimized BigInt Engine with Dynamic Range Recovery
+        // Application Logic & Upgraded Redefined Error/Notification System
         const inputField = document.getElementById('numberInput');
+        const clearBtn = document.getElementById('clearBtn');
         const actionBtnContainer = document.getElementById('actionButtonContainer');
         const processBtn = document.getElementById('processBtn');
         const noticeBox = document.getElementById('noticeBox');
         const resultBox = document.getElementById('resultBox');
 
         let previousInput = '';
+        const MAX_LIMIT_BIGINT = 10n ** 40n;
+        const MIN_MAX_LIMIT_BIGINT = 10n ** 39n;
+
+        function clearInputAlerts() {
+            inputField.classList.remove('red-siren-glow', 'red-static-glow', 'border-rose-500', 'border-amber-500');
+            inputField.disabled = false;
+        }
 
         function evaluateNumber() {
             const rawVal = inputField.value.trim();
             
+            if (rawVal.length > 0) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+            }
+
             if (!rawVal) {
                 previousInput = '';
                 actionBtnContainer.style.opacity = '0';
@@ -319,65 +348,109 @@
                 actionBtnContainer.style.pointerEvents = 'none';
                 noticeBox.classList.add('hidden');
                 resultBox.classList.add('hidden');
-                inputField.classList.remove('border-rose-500');
+                clearInputAlerts();
                 return;
             }
 
-            // Pre-check limit exceed safety boundary
             let cleanedStr = rawVal.replace(/[\s,]+/g, '');
+
+            if (/^0+$/.test(cleanedStr)) {
+                clearInputAlerts();
+                inputField.classList.add('red-siren-glow');
+                actionBtnContainer.style.opacity = '0';
+                actionBtnContainer.style.transform = 'translateY(8px)';
+                actionBtnContainer.style.pointerEvents = 'none';
+                resultBox.classList.add('hidden');
+                showNotice("Zero Error: Pure zero input is not permitted. Please provide a valid numeral value alongside digits (e.g., 00001).", "error");
+                return;
+            }
+
             const match = cleanedStr.match(/-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?/);
             
             let isExceeding = false;
+            let isOverFortyDigits = false;
+            let isExactMaxLimit = false; // 10^40
+            let isLastRange39 = false; // 10^39
+
             if (match) {
                 let extractedNumStr = match[0];
-                let digitCheckStr = extractedNumStr.replace(/[-.]/g, '');
-                if (extractedNumStr.toLowerCase().includes('e')) {
-                    let parts = extractedNumStr.toLowerCase().split('e');
-                    let expVal = parseInt(parts[1], 10);
-                    if (expVal > 32) {
-                        isExceeding = true;
+                let isNeg = extractedNumStr.startsWith('-');
+                let absCheckStr = isNeg ? extractedNumStr.slice(1) : extractedNumStr;
+                
+                try {
+                    if (absCheckStr.toLowerCase().includes('e')) {
+                        let parts = absCheckStr.toLowerCase().split('e');
+                        let baseVal = parseFloat(parts[0]);
+                        let expVal = parseInt(parts[1], 10);
+                        if (expVal > 40 || (expVal === 40 && baseVal > 1)) {
+                            isExceeding = true;
+                            isOverFortyDigits = true;
+                        } else if (expVal === 40 && baseVal === 1) {
+                            isExactMaxLimit = true;
+                        } else if (expVal === 39) {
+                            isLastRange39 = true;
+                        }
+                    } else {
+                        let integerPart = absCheckStr.split('.')[0] || "0";
+                        if (integerPart.length > 41) {
+                            isOverFortyDigits = true;
+                            isExceeding = true;
+                        } else {
+                            let numBig = BigInt(integerPart);
+                            if (numBig > MAX_LIMIT_BIGINT) {
+                                isExceeding = true;
+                            } else if (numBig === MAX_LIMIT_BIGINT) {
+                                isExactMaxLimit = true;
+                            } else if (numBig >= MIN_MAX_LIMIT_BIGINT && numBig < MAX_LIMIT_BIGINT) {
+                                isLastRange39 = true;
+                            }
+                        }
                     }
-                } else if (digitCheckStr.length > 32) {
-                    isExceeding = true;
+                } catch (e) {
+                    // Ignore parse issues during live typing
                 }
             }
 
-            if (isExceeding) {
-                if (rawVal.length > previousInput.length) {
-                    inputField.value = previousInput;
-                    return;
-                } else {
-                    previousInput = rawVal;
-                    inputField.classList.add('border-rose-500');
-                    actionBtnContainer.style.opacity = '0';
-                    actionBtnContainer.style.transform = 'translateY(8px)';
-                    actionBtnContainer.style.pointerEvents = 'none';
-                    resultBox.classList.add('hidden');
-                    showNotice("🛑 Limit exceed error: System protection triggered. Value exceeds 10³² range limit. Please decrease your input to resume.", "error");
-
-                    let currentCleaned = rawVal.replace(/[\s,]+/g, '');
-                    let currentMatch = currentCleaned.match(/-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?/);
-                    if (currentMatch) {
-                        let extStr = currentMatch[0];
-                        let digStr = extStr.replace(/[-.]/g, '');
-                        let stillExceeds = false;
-                        if (extStr.toLowerCase().includes('e')) {
-                            let parts = extStr.toLowerCase().split('e');
-                            if (parseInt(parts[1], 10) > 32) stillExceeds = true;
-                        } else if (digStr.length > 32) {
-                            stillExceeds = true;
-                        }
-                        if (stillExceeds) {
-                            return;
-                        }
-                    }
-                }
+            // Limit Exceed Error (> 10^40)
+            if (isOverFortyDigits || isExceeding) {
+                inputField.value = previousInput;
+                clearInputAlerts();
+                inputField.classList.add('red-siren-glow');
+                actionBtnContainer.style.opacity = '0';
+                actionBtnContainer.style.transform = 'translateY(8px)';
+                actionBtnContainer.style.pointerEvents = 'none';
+                resultBox.classList.add('hidden');
+                showNotice("Limit Exceed Error: The inputted number has crossed the 10⁴⁰ operational limit. Please decrease the numeral value of input to resume processing.", "error");
+                return;
             }
 
             previousInput = rawVal;
-            inputField.classList.remove('border-rose-500');
-            noticeBox.classList.add('hidden');
+            clearInputAlerts();
 
+            // Limit Reached Error: Exactly 10 to the power 40
+            if (isExactMaxLimit) {
+                inputField.classList.add('red-static-glow');
+                inputField.disabled = true;
+                showNotice("Limit Reached Error: The maximum operational boundary of 10⁴⁰ has been achieved. The input field is now locked. You can decrease the inputted number to resume operation.", "warning");
+                actionBtnContainer.style.opacity = '1';
+                actionBtnContainer.style.transform = 'translateY(0)';
+                actionBtnContainer.style.pointerEvents = 'auto';
+                processFactorization(rawVal);
+                return;
+            }
+
+            // 10 to the power 39 range message with light-red neon white siren alert and unlocked input
+            if (isLastRange39) {
+                inputField.classList.add('red-siren-glow');
+                showNotice("It is the last range and no more input is allowed. Decrease the input to resume the processor again.", "warning");
+                actionBtnContainer.style.opacity = '1';
+                actionBtnContainer.style.transform = 'translateY(0)';
+                actionBtnContainer.style.pointerEvents = 'auto';
+                processFactorization(rawVal);
+                return;
+            }
+
+            noticeBox.classList.add('hidden');
             actionBtnContainer.style.opacity = '1';
             actionBtnContainer.style.transform = 'translateY(0)';
             actionBtnContainer.style.pointerEvents = 'auto';
@@ -387,6 +460,20 @@
 
         inputField.addEventListener('input', evaluateNumber);
         processBtn.addEventListener('click', () => processFactorization(inputField.value.trim()));
+
+        clearBtn.addEventListener('click', () => {
+            if (confirm("Are you sure you want to clear the input field?")) {
+                inputField.value = '';
+                previousInput = '';
+                clearBtn.classList.add('hidden');
+                clearInputAlerts();
+                actionBtnContainer.style.opacity = '0';
+                actionBtnContainer.style.transform = 'translateY(8px)';
+                actionBtnContainer.style.pointerEvents = 'none';
+                noticeBox.classList.add('hidden');
+                resultBox.classList.add('hidden');
+            }
+        });
 
         function modularExponentiation(base, exp, mod) {
             let res = 1n;
@@ -477,7 +564,7 @@
         }
 
         function factorizeRecursive(n, factorsList, depth = 0) {
-            if (n <= 1n || depth > 100) return;
+            if (n <= 1n || depth > 150) return;
             if (isPrimeBigInt(n)) {
                 factorsList.push(n);
                 return;
@@ -492,14 +579,15 @@
         }
 
         function processFactorization(rawInputStr) {
-            noticeBox.classList.add('hidden');
-            resultBox.classList.add('hidden');
-
             let cleanedStr = rawInputStr.replace(/[\s,]+/g, '');
             
-            const hasDigits = /\d/.test(cleanedStr);
-            if (!hasDigits) {
+            if (!/\d/.test(cleanedStr)) {
                 showNotice("Please provide a valid numeric entry scale.", "error");
+                return;
+            }
+
+            if (/^0+$/.test(cleanedStr)) {
+                showNotice("Zero Error: Pure zero input is not permitted.", "error");
                 return;
             }
 
@@ -510,17 +598,26 @@
             }
 
             let extractedNumStr = match[0];
+            let absCheckStr = extractedNumStr.startsWith('-') ? extractedNumStr.slice(1) : extractedNumStr;
 
-            let digitCheckStr = extractedNumStr.replace(/[-.]/g, '');
-            if (extractedNumStr.toLowerCase().includes('e')) {
-                let parts = extractedNumStr.toLowerCase().split('e');
-                let expVal = parseInt(parts[1], 10);
-                if (expVal > 32) {
-                    showNotice("🛑 Limit exceed error: System protection triggered. Value exceeds 10³² range limit. Please decrease your input to resume.", "error");
-                    return;
+            try {
+                if (absCheckStr.toLowerCase().includes('e')) {
+                    let parts = absCheckStr.toLowerCase().split('e');
+                    let baseVal = parseFloat(parts[0]);
+                    let expVal = parseInt(parts[1], 10);
+                    if (expVal > 40 || (expVal === 40 && baseVal > 1)) {
+                        showNotice("Limit Exceed Error: Input crossed operational threshold.", "error");
+                        return;
+                    }
+                } else {
+                    let integerPart = absCheckStr.split('.')[0] || "0";
+                    if (integerPart.length > 41 || BigInt(integerPart) > MAX_LIMIT_BIGINT) {
+                        showNotice("Limit Exceed Error: Input crossed operational threshold.", "error");
+                        return;
+                    }
                 }
-            } else if (digitCheckStr.length > 32) {
-                showNotice("🛑 Limit exceed error: System protection triggered. Value exceeds 10³² range limit. Please decrease your input to resume.", "error");
+            } catch (e) {
+                showNotice("Please provide a valid numeric entry scale.", "error");
                 return;
             }
 
@@ -558,7 +655,7 @@
             }
 
             if (bigNum === 0n) {
-                showNotice("0 cannot be processed. Please input a non-zero integer value.", "error");
+                showNotice("Zero Error: Zero is not allowed to provide alone.", "error");
                 return;
             }
 
@@ -625,7 +722,9 @@
             let classificationText = primeStatus ? "Prime Number Matrix Detected" : "Composite Number Matrix";
             
             if (primeStatus) {
-                showNotice("✨ Exact Prime Number Identified! Displaying matched configuration factors below.", "success");
+                productStr = "1 × " + productStr;
+                expStr = "1 × " + expStr;
+                showNotice("Prime Number Notification: Prime number detected successfully.", "success");
             }
 
             displayResults(displayValStr, magnitudeStr, classificationText, uniqueFactorsStr, productStr, expStr);
@@ -642,16 +741,17 @@
         }
 
         function showNotice(message, type) {
-            noticeBox.className = "mt-4 sm:mt-6 p-3 sm:p-4 rounded-xl border text-xs sm:text-sm transition-all ";
+            noticeBox.className = "mt-4 sm:mt-6 p-3 sm:p-4 rounded-xl border text-xs sm:text-sm transition-all block ";
             if (type === 'error') {
                 noticeBox.classList.add('bg-rose-500/10', 'border-rose-500/30', 'text-rose-300');
             } else if (type === 'success') {
                 noticeBox.classList.add('bg-emerald-500/10', 'border-emerald-500/30', 'text-emerald-300');
+            } else if (type === 'warning') {
+                noticeBox.classList.add('bg-amber-500/10', 'border-amber-500/30', 'text-amber-300');
             } else {
                 noticeBox.classList.add('bg-cyan-500/10', 'border-cyan-500/30', 'text-cyan-300');
             }
             noticeBox.textContent = message;
-            noticeBox.classList.add('block');
             noticeBox.classList.remove('hidden');
         }
     </script>

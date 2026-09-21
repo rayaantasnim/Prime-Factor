@@ -1,0 +1,139 @@
+
+    body {
+      font-family: 'Rajdhani', 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      background-color: #000208;
+      color: #f0f6fc;
+      font-size: 1rem;
+    }
+    h1, h2, h3, .font-syncopate, .font-orbitron {
+      font-family: 'Orbitron', 'Syncopate', sans-serif;
+    }
+    .font-decorative {
+      font-family: 'Cinzel Decorative', serif;
+    }
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+    }
+    .glass-panel {
+      background: rgba(2, 6, 23, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.95), inset 0 0 20px rgba(0, 240, 255, 0.08);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .glass-panel:hover {
+      border-color: rgba(0, 240, 255, 0.8);
+      box-shadow: 0 0 35px rgba(0, 240, 255, 0.4), inset 0 0 25px rgba(0, 240, 255, 0.2);
+    }
+    .glass-panel-purple {
+      background: rgba(10, 2, 20, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(176, 38, 255, 0.25);
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.95), inset 0 0 20px rgba(176, 38, 255, 0.08);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .glass-panel-purple:hover {
+      border-color: rgba(176, 38, 255, 0.8);
+      box-shadow: 0 0 35px rgba(176, 38, 255, 0.4), inset 0 0 25px rgba(176, 38, 255, 0.2);
+    }
+    .neon-text-glow {
+      text-shadow: 0 0 20px rgba(0, 240, 255, 0.8), 0 0 40px rgba(176, 38, 255, 0.6);
+      transition: text-shadow 0.3s ease;
+    }
+    .neon-text-glow:hover {
+      text-shadow: 0 0 30px rgba(0, 240, 255, 1), 0 0 60px rgba(176, 38, 255, 0.9);
+    }
+    .neon-purple-glow {
+      text-shadow: 0 0 20px rgba(176, 38, 255, 0.8), 0 0 40px rgba(255, 0, 127, 0.6);
+      transition: text-shadow 0.3s ease;
+    }
+    .neon-purple-glow:hover {
+      text-shadow: 0 0 30px rgba(176, 38, 255, 1), 0 0 60px rgba(255, 0, 127, 0.9);
+    }
+    .mesh-gradient {
+      background: radial-gradient(circle at 50% 20%, rgba(176, 38, 255, 0.15), rgba(0, 240, 255, 0.1), rgba(0, 2, 8, 1));
+    }
+
+    /* Universal Hover Neon Elevation for any generic element */
+    .universal-hover {
+      transition: all 0.3s ease;
+    }
+    .universal-hover:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+      border-color: rgba(0, 240, 255, 0.7);
+    }
+
+    /* Responsive Horizontal Scrolling Container */
+    .horizontal-section-wrapper {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+    .horizontal-track {
+      display: flex;
+      gap: 1.5rem;
+      width: max-content;
+      padding: 1.5rem 2rem;
+      will-change: transform;
+    }
+
+    /* Media Queries for Mobile Adjustments (iPhone smaller screens) */
+    @media (max-width: 768px) {
+      body {
+        font-size: 0.95rem;
+      }
+      .horizontal-section-wrapper {
+        height: auto !important;
+        overflow: visible !important;
+      }
+      .horizontal-track {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        transform: none !important;
+        gap: 1.25rem !important;
+        padding: 0.75rem !important;
+      }
+      .carousel-card {
+        width: 100% !important;
+        height: auto !important;
+        min-height: 380px !important;
+      }
+      /* Vertical stacked layout for iPhone card header to avoid collision */
+      .card-header-top {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.4rem !important;
+      }
+      .card-header-top > span:last-child {
+        align-self: flex-end !important;
+        font-size: 0.75rem !important;
+      }
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #000208;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #00f0ff55;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #00f0ff;
+    }

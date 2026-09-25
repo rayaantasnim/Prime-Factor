@@ -1,5 +1,4 @@
-
-    body {
+body {
       font-family: 'Rajdhani', 'Plus Jakarta Sans', sans-serif;
       overflow-x: hidden;
       background-color: #000208;
@@ -87,6 +86,29 @@
       will-change: transform;
     }
 
+    /* Card height adjustment & hover states */
+    .carousel-card {
+      height: 90vh !important;
+      min-height: 560px;
+      padding-bottom: 2.5rem !important;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                  box-shadow 0.4s ease, 
+                  border-color 0.4s ease;
+    }
+
+    .carousel-card h2 {
+      font-size: 1.25rem !important;
+    }
+
+    .carousel-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 15px 50px rgba(0, 240, 255, 0.35), inset 0 0 30px rgba(0, 240, 255, 0.2);
+    }
+
+    .carousel-card.glass-panel-purple:hover {
+      box-shadow: 0 15px 50px rgba(176, 38, 255, 0.35), inset 0 0 30px rgba(176, 38, 255, 0.2);
+    }
+
     /* Media Queries for Mobile Adjustments (iPhone smaller screens) */
     @media (max-width: 768px) {
       body {
@@ -107,7 +129,14 @@
       .carousel-card {
         width: 100% !important;
         height: auto !important;
-        min-height: 380px !important;
+        min-height: 520px !important;
+        padding-bottom: 2rem !important;
+      }
+      .carousel-card h2 {
+        font-size: 1.1rem !important;
+      }
+      .carousel-card:hover {
+        transform: translateY(-4px) scale(1.01);
       }
       /* Vertical stacked layout for iPhone card header to avoid collision */
       .card-header-top {
@@ -119,6 +148,14 @@
       .card-header-top > span:last-child {
         align-self: flex-end !important;
         font-size: 0.75rem !important;
+      }
+    }
+
+    @media (min-width: 1536px) {
+      .carousel-card {
+        height: 88vh !important;
+        min-height: 620px;
+        padding-bottom: 2.5rem !important;
       }
     }
 

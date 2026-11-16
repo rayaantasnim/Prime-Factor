@@ -88,7 +88,7 @@ body {
 
     /* Card height adjustment & hover states */
     .carousel-card {
-      height: 90vh !important;
+      height: 100vh !important;
       min-height: 560px;
       padding-bottom: 2.5rem !important;
       transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
